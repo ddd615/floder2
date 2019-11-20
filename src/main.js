@@ -5,13 +5,14 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui';
+import { post } from '@/libs/http/request'
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(ElementUI, { locale });
-
+Vue.prototype.$post = post;
 // 下面这段代码是为了兼容ie浏览器而写
 if (Number.parseInt === undefined) Number.parseInt = window.parseInt;
 if (Number.parseFloat === undefined) Number.parseFloat = window.parseFloat;

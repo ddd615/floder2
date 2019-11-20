@@ -9,9 +9,47 @@ Vue.use(ElementUI);
 const router = new Router({
   routes: [
     {
-      path: '/',
+      path: '/index',
       name: 'HelloWorld',
+      meta:{
+        breadcrumb:[
+          {
+            name:'首页',
+            path:'/index'
+          }
+        ],
+        isShowLeftSider:true,
+        isShowHeader:true,
+      },
       component: HelloWorld
+    },
+    {
+      path:'/login',
+      name:'login',
+      meta:{
+        isShowHeader:false,
+        isShowLeftSider:false,
+      },
+      component: () => import( '@/views/Login.vue'),
+    },
+    {
+      path:'/manager/list',
+      name:'managerList',
+      meta:{
+        isShowHeader:true,
+        isShowLeftSider:true,
+        breadcrumb: [
+          {
+            name:'首页',
+            path:'/index'
+          },
+          {
+            name:'管理员列表',
+            path:'/manager/list'
+          }
+        ]
+      },
+      component: () => import('@/views/manager/list')
     }
   ]
 });
