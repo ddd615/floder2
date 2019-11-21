@@ -34,8 +34,8 @@
       return {
         projectName: "floder后台管理系统",
         formValidate: {
-          username: "paoding",
-          password: "123qwe"
+          username: "admin",
+          password: "123456"
         },
         ruleValidate: {
           username: [

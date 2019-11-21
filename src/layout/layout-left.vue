@@ -13,10 +13,12 @@
       <el-menu
         background-color="rgba(20, 31, 41)"
         text-color="rgb(224, 225, 226)"
+        active-text-color="#00A16C"
+        unique-opened="true"
         @select="onSelect"
       >
         <template v-for="item,i in menuList">
-          <el-submenu index="i">
+          <el-submenu :index="i">
             <template slot="title"><i class="el-icon-message"></i>{{item.displayName}}</template>
             <el-menu-item
               :index="i+'-'+j"
@@ -95,5 +97,9 @@ export default {
     font-size: 15px;
     line-height: 40px;
     margin: 10px 0;
+  }
+  .el-menu-item:hover{
+    background:#57b382!important;
+
   }
 </style>
