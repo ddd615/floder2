@@ -9,8 +9,8 @@
         @on-change="onChange"
       ></search-item>
       <slot></slot>
-      <el-button class="search-btn" icon="md-search" type="primary" @click="onSearch">搜索</el-button>
-      <el-button icon="md-refresh" @click="onReset">重置</el-button>
+      <el-button class="search-btn" icon="el-icon-search" type="primary" @click="onSearch">搜索</el-button>
+      <el-button icon="el-icon-refresh" @click="onReset">重置</el-button>
     </div>
   </div>
 </template>
@@ -64,10 +64,13 @@
 <style lang="less" scoped>
   .search {
     .search-block {
-      padding: 10px 20px;
+      /*padding: 10px 20px;*/
       // background-color: #ffffff;
       .search-btn {
-        margin: 0 10px;
+        /*margin: 0 10px;*/
+        background: #00a16c;
+        border: none;
+        border-radius: 2px;
       }
     }
   }

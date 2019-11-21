@@ -4,19 +4,10 @@
       <slot></slot>
     </div>
     <div class="body">
-<!--      <Table-->
-<!--        @on-selection-change="handleSelectChange"-->
-<!--        @on-select="handleSelect"-->
-<!--        @on-select-all="handleSelectAll"-->
-<!--        @on-sort-change="handleSortChange"-->
-<!--        :border="showBorder"-->
-<!--        ref="table"-->
-<!--        :columns="columns"-->
-<!--        :data="data"-->
-<!--      ></Table>-->
+
       <el-table
         ref="multipleTable"
-        :data="tableData"
+        :data="data"
         border
         tooltip-effect="dark"
         style="width: 100%"
@@ -25,15 +16,35 @@
         <el-table-column
           type="selection"
           width="55"
+          align="center"
           v-if="hasSelection"
         >
         </el-table-column>
+<!--        数据展示列-->
         <el-table-column
           :prop="col.key"
           :label="col.title"
+          :align="col.align"
+          :sortable="col.sortable"
           v-for="(col,colIndex) in columns"
           show-overflow-tooltip>
         </el-table-column>
+<!--        操作按钮列-->
+<!--        <el-table-column ref="fixedColumn" label="操作" align="center" :width="operates.width" :fixed="operates.fixed"-->
+<!--                         v-if="operates.list.filter(_x=>_x.show === true).length > 0">-->
+<!--          <template slot-scope="scope">-->
+<!--            <div class="operate-group">-->
+<!--              <template v-for="(btn, key) in operates.list">-->
+<!--                <div class="item" v-if="btn.show" :key='btn.id'>-->
+<!--                  <el-button :type="btn.type" size="mini" :icon="btn.icon" :disabled="btn.disabled"-->
+<!--                             :plain="btn.plain" @click.native.prevent="btn.method(key,scope.row)">{{ btn.label }}-->
+<!--                  </el-button>-->
+<!--                </div>-->
+<!--              </template>-->
+<!--            </div>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+        <slot></slot>
       </el-table>
     </div>
     <div class="footor" v-if="showFooter">
@@ -87,6 +98,10 @@
       hasSelection: {
         type: Boolean,
         default: true,
+      },
+      operates: {
+        type: Object,
+        default: {},
       }
     },
     data() {
@@ -177,13 +192,18 @@
 <style lang="less" scoped>
   .i-v-table {
     width: 90%;
-    margin: 0 auto;
+    position: relative;
+    left: 30px;
     .heading {
       height: auto;
       width: 100%;
     }
     .body {
       background-color: #ffffff;
+      .operate-group{
+        display: flex;
+        justify-content: space-around;
+      }
     }
 
     .footor {

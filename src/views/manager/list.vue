@@ -1,9 +1,6 @@
 <template>
   <el-row class="page">
-    <el-col :span="24" style="margin: 10px 30px;">
-      <el-button icon="md-add" style="margin-right: 10px;" type="primary" @click="toCreate">新建</el-button>
-      <el-button icon="md-trash" @click="batchDelete">删除</el-button>
-    </el-col>
+
     <el-col :span="24">
       <search
         style="margin: 10px 30px;"
@@ -11,14 +8,35 @@
         @on-search="searchBySearchItem"
       ></search>
     </el-col>
+    <el-col :span="24" style="margin: 10px 30px;">
+      <el-button style="background: rgb(0, 161, 108);border: none" icon="el-icon-plus"  type="primary" @click="toCreate">新建</el-button>
+      <el-button icon="el-icon-delete" @click="batchDelete">删除</el-button>
+      <el-button icon="el-icon-circle-check" @click="batchDelete">启用</el-button>
+      <el-button icon="el-icon-circle-close" @click="batchDelete">禁用</el-button>
+    </el-col>
     <el-col :span="24">
       <i-table
+        @on-transport-selectList="handleTransportSelectList"
         @on-page-change="handlePageChange"
         @on-page-size-change="handlePageSizeChange"
+        :data="data"
         :total="total"
         :curPage="page"
         :columns="columns"
-      ></i-table>
+        :operates="operates"
+      >
+        <el-table-column
+          fixed="right"
+          align="center"
+          label="操作"
+          width="200">
+          <template slot-scope="scope">
+            <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
+            <el-button @click="handleStatusChange(scope.row)" type="text" size="small">{{scope.row.status.indexOf('启用') >= 0 ? '禁用' : '启用'}}</el-button>
+
+          </template>
+        </el-table-column>
+      </i-table>
     </el-col>
   </el-row>
 </template>
@@ -27,21 +45,22 @@
   import ITable from "@/components/table";
   // import IModal from "@/components/modal";
   import { post } from "@/libs/http/request";
+  import Emitter from '@/mixins/emitter'
   const LIST_URL = "/api/manager/search";
   const COUNT_URL = "/api/manager/count";
   const DELETE_URL = "/api/manager/delete";
-
   const BATCH_DELETE_URL = "/api/manager/delete";
   const ENABLE_URL = "/api/manager/enable";
   const DISABLE_URL = "/api/manager/disable";
   export default {
+    mixins:[Emitter],
     data() {
       return {
         model: "manager",
         columns: [
           {
             title: "账号",
-            key: "name",
+            key: "username",
             align: "center"
           },
           {
@@ -69,80 +88,50 @@
             title: "状态",
             key: "status",
             align: "center"
-          },
-          {
-            title: "操作",
-            align: "center",
-            render: (h, params) => {
-              let status = params.row.status;
-              return h("div", [
-                h(
-                  "a",
-                  {
-                    style: {
-                      marginRight: "20px"
-                    },
-                    on: {
-                      click: () => {
-                        this.$router.push(
-                          `/${this.model}/create/${params.row.id}`
-                        );
-                      }
-                    }
-                  },
-                  "编辑"
-                ),
-                h(
-                  "a",
-                  {
-                    style: {
-                      marginRight: "20px"
-                    },
-                    on: {
-                      click: () => {
-                        let text = status === "禁用" ? "启用" : "禁用";
-                        let url = status === "禁用" ? ENABLE_URL : DISABLE_URL;
-                        this.$Modal.confirm({
-                          title: `${text}提示`,
-                          content: `确定${text}该记录吗?`,
-                          okText: "确定",
-                          cancelText: "取消",
-                          onOk: () => {
-                            let id = params.row.id;
-                            this.enable(id, url);
-                          },
-                          onCancel: () => {}
-                        });
-                      }
-                    }
-                  },
-                  status === "禁用" ? "启用" : "禁用"
-                ),
-                h(
-                  "a",
-                  {
-                    on: {
-                      click: () => {
-                        this.$Modal.confirm({
-                          title: "删除提示",
-                          content: `确定该记录吗?`,
-                          okText: "确定",
-                          cancelText: "取消",
-                          onOk: () => {
-                            let id = params.row.id;
-                            this.delete(id);
-                          },
-                          onCancel: () => {}
-                        });
-                      }
-                    }
-                  },
-                  "删除"
-                )
-              ]);
-            }
           }
         ],
+        operates: {
+          width: 300,
+          fixed: 'right',
+          list: [
+            {
+              id:'1',
+              label: '编辑',
+              type: 'warning',
+              show: true,
+              icon: 'el-icon-edit',
+              plain: true,
+              disabled: false,
+              method: (index, row) => {
+                this.handleEdit(index, row)
+              }
+            },
+            {
+              id:'2',
+              label: '删除',
+              type: 'danger',
+              icon: 'el-icon-delete',
+              show: true,
+              plain: false,
+              disabled: false,
+              method: (index, row) => {
+                this.handleDel(index, row)
+              }
+            },
+            {
+              id:'3',
+              label: '启用',
+              type: 'danger',
+              icon: 'el-icon-delete',
+              show: true,
+              plain: false,
+              disabled: false,
+              method: (index, row) => {
+                this.handleDel(index, row)
+              }
+            }
+          ]
+        }, // 列操作按钮
         data: [],
         selectList: [],
         sort: { asc: [], desc: [] },
@@ -202,6 +191,58 @@
       handleClear() {
         delete this.extraParam.loginStartDate;
         delete this.extraParam.loginEndDate;
+      },
+      handleEdit(row) {
+        console.log(row);
+      },
+      handleDel(index,row) {
+        console.log(row);
+        post(`api/${this.model}/delete`,{ id : row.id }, res => {
+          this.$message({
+            message: '删除成功!',
+            type: 'success'
+          })
+        })
+      },
+      handleStatusChange(row) {
+        console.log(row);
+        let status;
+        let _t = this;
+        if (row.status.indexOf('启用') >= 0) {
+          status = '禁用'
+        } else {
+          status = '启用'
+        }
+        this.$confirm(`确定${status}选中内容？`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          if (status === '禁用') {
+            post(`api/${_t.model}/disable`,{ id : row.id },res => {
+              _t.$message({
+                  type: 'success',
+                  message: '已禁用!'
+                });
+              _t.search(_t.page);
+            })
+          }else {
+            post(`api/${_t.model}/enable`,{ id : row.id },res => {
+              _t.$message({
+                type: 'success',
+                message: '已启用!'
+              });
+              _t.search(_t.page);
+            })
+          }
+
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+
       },
       handlePageSizeChange(pageSize) {
         this.pageSize = pageSize;
@@ -284,27 +325,35 @@
       handleTransportSelectList(list) {
         this.selectList = list;
       },
+      //批量删除
       batchDelete() {
         this.broadcast("SiTable", "on-get-selectList");
         this.$nextTick(() => {
           let selectList = this.selectList;
           if (selectList.length === 0) {
-            this.$Notice.warning({
+            this.$notify.warning({
               title: "至少选择一条数据"
             });
             return;
           }
-          this.$Modal.confirm({
-            title: `删除提示`,
-            content: `确定删除所选记录吗?`,
-            okText: "确定",
-            cancelText: "取消",
-            onOk: () => {
-              post(BATCH_DELETE_URL, { ids: ids }, res => {
-                _t.search(_t.page);
+          this.$confirm('确定删除所选记录吗?', '删除提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            post(BATCH_DELETE_URL, { ids: ids }, res => {
+              _t.search(_t.page);
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
               });
-            },
-            onCancel: () => {}
+            });
+
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });
           });
         });
       },
@@ -322,7 +371,7 @@
       }
     },
     mounted() {
-      // this.search(1);
+      this.search(1);
       // this.findAllRoles();
     }
   };
@@ -331,5 +380,17 @@
   .page {
     overflow-y: auto;
     overflow-x: hidden;
+  }
+  .el-button{
+    border-radius: 2px;
+    padding: 12px 16px;
+  }
+  .el-button+.el-button{
+    margin-left: 2px;
+  }
+  .el-button--default:hover{
+    color: #00a16c;
+    border: 1px solid#00a16c;
+    background: white;
   }
 </style>

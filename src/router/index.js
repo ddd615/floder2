@@ -50,6 +50,29 @@ const router = new Router({
         ]
       },
       component: () => import('@/views/manager/list')
+    },
+    {
+      path:'/manager/create/:id',
+      name:'managerCreate',
+      meta:{
+        isShowHeader:true,
+        isShowLeftSider:true,
+        breadcrumb: [
+          {
+            name:'首页',
+            path:'/index'
+          },
+          {
+            name:'管理员列表',
+            path:'/manager/list'
+          },
+          {
+            name:'管理员详情',
+            path:'/manager/create/:id'
+          }
+        ]
+      },
+      component: () => import('@/views/manager/create')
     }
   ]
 });
