@@ -1,7 +1,7 @@
 [
     {
         "displayName": "系统管理",
-        "icon": "md-construct",
+        "icon": "el-icon-setting",
         "mid": 1,
         "children": [
             {
@@ -33,7 +33,7 @@
     },
     {
         "displayName": "用户管理",
-        "icon": "md-person",
+        "icon": "el-icon-user",
         "mid": 1,
         "children": [
             {
@@ -60,7 +60,7 @@
     },
     {
         "displayName": "会员管理",
-        "icon": "md-cash",
+        "icon": "el-icon-s-custom",
         "mid": 1,
         "children": [
             {
@@ -72,7 +72,7 @@
     },
     {
         "displayName": "桌椅管理",
-        "icon": "md-settings",
+        "icon": "el-icon-data-board",
         "mid": 1,
         "children": [
             {
@@ -84,7 +84,7 @@
     },
     {
         "displayName": "内容管理",
-        "icon": "md-book",
+        "icon": "el-icon-tickets",
         "mid": 1,
         "children": [
             {
@@ -106,7 +106,7 @@
     },
     {
         "displayName": "互动管理",
-        "icon": "md-contacts",
+        "icon": "el-icon-service",
         "mid": 1,
         "children": [
             {
@@ -118,7 +118,7 @@
     },
     {
         "displayName": "消息管理",
-        "icon": "md-chatboxes",
+        "icon": "el-icon-chat-dot-square",
         "mid": 1,
         "children": [
             {

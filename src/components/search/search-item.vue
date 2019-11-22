@@ -2,13 +2,13 @@
   <div class="search-item">
     <div class="label">{{item.name}}</div>
     <div class="content" v-if="item.type === 'string'">
-      <el-input v-model="value" :clearable="true" :placeholder="item.name" @on-keyup="onChange"></el-input>
+      <el-input v-model="value" :clearable="true" :placeholder="item.name" @change="onChange"></el-input>
     </div>
     <div class="content" v-if="item.type === 'select'">
       <el-select
         v-model="value"
         :placeholder="item.name"
-        @on-change="onChange"
+        @change="onChange"
         :clearable="true"
         style="width: 200px"
       >
@@ -20,7 +20,7 @@
       <el-date-picker
         v-model="value"
         type="datetime"
-        @on-change="onChange"
+        @change="onChange"
         style="width: 200px"
         format="yyyy-MM-dd HH:mm:ss"
         :placeholder="item.name"
@@ -29,7 +29,7 @@
     <div class="content" v-if="item.type === 'date'">
       <el-date-picker
         v-model="value"
-        @on-change="onChange"
+        @change="onChange"
         format="yyyy-MM-dd"
         type="date"
         :placeholder="item.name"
@@ -39,20 +39,26 @@
     <div class="content" v-if="item.type === 'daterange'">
       <el-date-picker
         v-model="value"
-        @on-change="onChange"
+        @change="onChange"
         format="yyyy-MM-dd"
         type="daterange"
         :placeholder="item.name"
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
         style="width: 200px"
       ></el-date-picker>
     </div>
     <div class="content" v-if="item.type === 'datetimerange'">
       <el-date-picker
         v-model="value"
-        @on-change="onChange"
+        @change="onChange"
         format="yyyy-MM-dd hh:mm:ss"
         type="datetimerange"
         :placeholder="item.name"
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
         style="width: 290px"
       ></el-date-picker>
     </div>
@@ -88,11 +94,12 @@
     },
     methods: {
       onChange(e) {
+        console.log(e);
         let obj = {};
         obj.key = this.item.key;
         let type = this.item.type;
         if (type === "string") {
-          let value = e.target.value;
+          let value = e;
           if (value) {
             obj.value = value;
           }
@@ -100,6 +107,7 @@
           let value = e;
           if (value !== -1) {
             obj.value = this.item.value[value];
+            this.value = this.item.value[value];
           }
         } else if (type === "date") {
           obj.value = e;

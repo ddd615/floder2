@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
       // proxy all requests starting with /api to jsonplaceholder
       '/': {
-        target: 'http://192.168.0.235:8081/',
+        target: 'https://www.gunghobox.com/',
         changeOrigin: true,
         pathRewrite: {
           '^/': ''

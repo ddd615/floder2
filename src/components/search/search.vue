@@ -40,6 +40,7 @@
     computed: {},
     methods: {
       onSearch() {
+        console.log(this.keywords);
         this.$emit("on-search", this.keywords); // handle seach
       },
       onReset() {

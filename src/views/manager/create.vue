@@ -1,9 +1,9 @@
 <template>
-  <el-row class="page">
-    <el-col offset="1" span="12" style="margin-top: 20px;">
+  <el-row class="page" v-if="isFinish">
+    <el-col :offset="1" :span="12" style="margin-top: 20px;">
       <h3>基本信息</h3>
     </el-col>
-    <el-col offset="1" span="12" style="margin-top: 20px;">
+    <el-col :offset="1" :span="12" style="margin-top: 20px;">
       <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="200px">
         <el-form-item label="启用状态" prop="status" label-width="100px">
           <el-radio-group v-model="formValidate.status">
@@ -33,7 +33,12 @@
 <!--            :uploadStyles="{width: '40px', height: '40px', lineHeight: '40px'}"-->
 <!--            :picStyles="{width: '200px', height: '120px', lineHeight: '120px' }"-->
 <!--          />-->
-          <upload>
+          <upload
+            @on-transport-file-list="handleTransportFileList"
+            :file-list="[formValidate.avatar]"
+            :max-size="5120"
+            :limit="3"
+          >
 
           </upload>
         </el-form-item>
@@ -156,7 +161,8 @@
           fileList: [
             { required: true, validator: validateFileList, trigger: "blur" }
           ]
-        }
+        },
+        isFinish: false,
       };
     },
     components: {
@@ -165,12 +171,13 @@
     methods: {
       handleSubmit(realname) {
         this.broadcast("SiUpload", "on-form-submit", () => {});
-        this.$nextTick(() => {
-          this.$refs[realname].validate(valid => {
-            if (valid) {
-            }
-          });
-        });
+
+        // this.$nextTick(() => {
+        //   this.$refs[realname].validate(valid => {
+        //     if (valid) {
+        //     }
+        //   });
+        // });
       },
       handleReset(realname) {
         //   this.$refs[realname].resetFields();
@@ -178,6 +185,12 @@
       },
       handleTransportFileList(fileList) {
         this.formValidate.fileList = fileList;
+        let urlList = [];
+        fileList.map(s => {
+          urlList.push(s.response.data);
+        });
+        this.formValidate.avatar = urlList.join(';');
+        console.log(this.formValidate.avatar);
       },
       get(id) {
         post(GET_URL, { id }, res => {
@@ -185,6 +198,7 @@
           keys.map(key => {
             this.formValidate[key] = res[key];
           });
+          this.isFinish = true;
         });
       }
     },
@@ -192,6 +206,8 @@
       let id = this.$route.params.id;
       if (parseInt(id) !== 0) {
         this.get(id);
+      }else {
+        this.isFinish = true;
       }
     }
   };

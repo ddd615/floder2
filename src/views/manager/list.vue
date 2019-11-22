@@ -11,14 +11,15 @@
     <el-col :span="24" style="margin: 10px 30px;">
       <el-button style="background: rgb(0, 161, 108);border: none" icon="el-icon-plus"  type="primary" @click="toCreate">新建</el-button>
       <el-button icon="el-icon-delete" @click="batchDelete">删除</el-button>
-      <el-button icon="el-icon-circle-check" @click="batchDelete">启用</el-button>
-      <el-button icon="el-icon-circle-close" @click="batchDelete">禁用</el-button>
+      <el-button icon="el-icon-circle-check" @click="batchEnable" :disabled="!selectList.findIndex(s=>{return s.status === '启用'}) || selectList.length === 0">启用</el-button>
+      <el-button icon="el-icon-circle-close" @click="batchDisable" :disabled="!selectList.findIndex(s=>{return s.status === '禁用'}) || selectList.length === 0">禁用</el-button>
     </el-col>
     <el-col :span="24">
       <i-table
         @on-transport-selectList="handleTransportSelectList"
         @on-page-change="handlePageChange"
         @on-page-size-change="handlePageSizeChange"
+        @on-selection-change="handleSelectionChange"
         :data="data"
         :total="total"
         :curPage="page"
@@ -133,6 +134,7 @@
           ]
         }, // 列操作按钮
         data: [],
+        isFinish:false,
         selectList: [],
         sort: { asc: [], desc: [] },
         pageSize: 10,
@@ -193,7 +195,7 @@
         delete this.extraParam.loginEndDate;
       },
       handleEdit(row) {
-        console.log(row);
+        this.$router.push({path:'/manager/create/'+row.id});
       },
       handleDel(index,row) {
         console.log(row);
@@ -356,6 +358,61 @@
             });
           });
         });
+      },
+      //批量启用
+      batchEnable(){
+        let _t = this;
+        let selectList = this.selectList;
+        this.$confirm('确定启用所选的记录吗?', '启用提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          selectList.map(s => {
+            post(`api/${this.model}/enable`,{ id : s.id },res => {
+              _t.search(_t.page);
+              // this.$message({
+              //   type: 'success',
+              //   message: '删除成功!'
+              // });
+            })
+          })
+
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      },
+      //批量禁用
+      batchDisable(){
+        let _t = this;
+        let selectList = this.selectList;
+        this.$confirm('确定启用所选的记录吗?', '启用提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          selectList.map(s => {
+            post(`api/${this.model}/disable`,{ id : s.id },res => {
+              _t.search(_t.page);
+              // this.$message({
+              //   type: 'success',
+              //   message: '删除成功!'
+              // });
+            })
+          })
+
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      },
+      handleSelectionChange(selection){
+        this.selectList = selection;
       },
       delete(id) {
         let _t = this;

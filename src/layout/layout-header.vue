@@ -10,7 +10,7 @@
           {{item.name}}
         </el-breadcrumb-item>
       </el-breadcrumb>
-      <span>王小虎</span>
+      <span>{{store.user.nickname}}</span>
     </div>
   </el-header>
 </template>
@@ -21,11 +21,20 @@ export default {
   data(){
    return{
      projectName: 'floder后台管理系统',
-     breadcrumbList:[]
+     // breadcrumbList:[]
    }
+  },
+  computed:{
+    breadcrumbList(){
+      return this.$route.meta.breadcrumb;
+    },
+    store(){
+      return this.$store.state;
+    }
   },
   created() {
     this.breadcrumbList = this.$route.meta.breadcrumb;
+
   }
 
 }

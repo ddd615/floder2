@@ -19,7 +19,7 @@
       >
         <template v-for="item,i in menuList">
           <el-submenu :index="i">
-            <template slot="title"><i class="el-icon-message"></i>{{item.displayName}}</template>
+            <template slot="title"><i :class="item.icon"></i>{{item.displayName}}</template>
             <el-menu-item
               :index="i+'-'+j"
               v-if="!child.children"

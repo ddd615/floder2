@@ -71,7 +71,7 @@
                 user: user,
               });
               _t.$store.dispatch("SAVE_USER_CACHE");
-              _t.$router.push("/");
+              _t.$router.push("/index");
             })
           }
         });
@@ -99,6 +99,9 @@
       font-size: 30px;
       color: #333333;
     }
+  }
+  .el-input{
+    width: 100%;
   }
   .el-button--success{
     width: 100%;

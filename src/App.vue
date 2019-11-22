@@ -40,6 +40,11 @@ export default {
     width: 200px;
   }
   .el-input__inner{
-
+    height: 35px;
+    line-height: 35px;
+  }
+  /*表格行高*/
+  .el-table td, .el-table th{
+    padding: 0;
   }
 </style>

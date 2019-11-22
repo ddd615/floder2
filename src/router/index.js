@@ -9,6 +9,10 @@ Vue.use(ElementUI);
 const router = new Router({
   routes: [
     {
+      path:'/',
+      redirect:'/login'
+    },
+    {
       path: '/index',
       name: 'HelloWorld',
       meta:{
@@ -38,6 +42,7 @@ const router = new Router({
       meta:{
         isShowHeader:true,
         isShowLeftSider:true,
+        keepAlive:true,
         breadcrumb: [
           {
             name:'首页',
@@ -99,7 +104,7 @@ router.afterEach(route => {
   window.scrollTo(0, 0);
   setTimeout(() => {
      loading.close();
-  },500);
+  },200);
 
 });
 

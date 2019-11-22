@@ -165,7 +165,7 @@
       handleSelect(selection, row) {},
       handleSelectionChange(selection) {
         this.selectList = selection;
-        console.log(selection)
+        this.$emit('on-selection-change',selection);
       },
 
       handleCurrentChange(val) {
