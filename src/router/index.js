@@ -14,7 +14,7 @@ const router = new Router({
     },
     {
       path: '/index',
-      name: 'HelloWorld',
+      name: 'Welcome',
       meta:{
         breadcrumb:[
           {
@@ -25,13 +25,13 @@ const router = new Router({
         isShowLeftSider:true,
         isShowHeader:true,
       },
-      component: HelloWorld
+      component: () => import('@/views/Welcome.vue')
     },
     {
       path:'/login',
       name:'login',
       meta:{
-        isShowHeader:false,
+        isShowHeader:true,
         isShowLeftSider:false,
       },
       component: () => import( '@/views/Login.vue'),

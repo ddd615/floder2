@@ -47,4 +47,8 @@ export default {
   .el-table td, .el-table th{
     padding: 0;
   }
+  /*.el-table thead{*/
+  /*  color: #333333;*/
+  /*}*/
+
 </style>

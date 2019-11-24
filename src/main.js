@@ -8,10 +8,12 @@ import ElementUI from 'element-ui';
 import { post } from '@/libs/http/request'
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en'
+import i18n from '../i18n/i18n.js' //引入i8n配置
+
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);
-Vue.use(ElementUI, { locale });
+// Vue.use(ElementUI, { locale });
 Vue.prototype.$post = post;
 // 下面这段代码是为了兼容ie浏览器而写
 if (Number.parseInt === undefined) Number.parseInt = window.parseInt;
@@ -113,6 +115,7 @@ new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   components: { App },
   template: '<App/>'
 })

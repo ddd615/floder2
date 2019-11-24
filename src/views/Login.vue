@@ -2,22 +2,22 @@
   <div class="page">
     <el-row>
       <el-col style="text-align: center;margin-top: 100px;" :xs="{ span: 12, offset: 8 }" :lg="{ span: 8, offset: 8 }">
-        <h1 class="logo-text" >{{projectName}}</h1>
+        <h1 class="logo-text" >{{$t('message.projectName')}}</h1>
       </el-col>
       <el-col style="margin-top: 50px;"  :xs="{ span: 12, offset: 8 }" :lg="{ span: 6, offset: 9 }">
         <el-form ref="formValidate"   :model="formValidate" :rules="ruleValidate" >
-          <el-form-item label="" prop="username">
+          <el-form-item :label="$t('message.username')" prop="username">
             <el-input class="has-prefix"  :maxlength="50" v-model="formValidate.username" placeholder="请输入用户名">
               <i class="el-icon-user-solid" slot="prefix" />
             </el-input>
           </el-form-item>
-          <el-form-item label="" prop="password">
+          <el-form-item :label="$t('message.password')" prop="password">
             <el-input class="has-prefix" style="padding-left: 0px!important;" :type="'password'" :minlength="6" :maxlength="20" v-model="formValidate.password" placeholder="请输入登录密码">
               <i class="el-icon-lock" slot="prefix" />
             </el-input>
           </el-form-item>
           <el-form-item >
-            <el-button long type="success" @click="handleSubmit('formValidate')">登录</el-button>
+            <el-button long type="success" @click="handleSubmit('formValidate')">{{$t('message.signIn')}}</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -32,7 +32,7 @@
     name: "Login",
     data() {
       return {
-        projectName: "floder后台管理系统",
+        projectName: "litchi后台管理系统",
         formValidate: {
           username: "admin",
           password: "123456"

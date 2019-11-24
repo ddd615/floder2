@@ -1,6 +1,6 @@
 <template>
   <el-header style="position:fixed;top: 0;width:100%;display: flex;padding: 0;height: 48px">
-    <div class="sider-logo">{{projectName}}</div>
+    <div class="sider-logo">{{$t('message.projectName')}}</div>
     <div class="head-setting">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item
@@ -10,7 +10,19 @@
           {{item.name}}
         </el-breadcrumb-item>
       </el-breadcrumb>
-      <span>{{store.user.nickname}}</span>
+      <div>
+<!--        选择国际化语言-->
+        <el-select v-model="selectValue" @change="langChange" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+        <span>{{store.user.nickname}}</span>
+      </div>
     </div>
   </el-header>
 </template>
@@ -20,8 +32,18 @@ export default {
   name: "layout-header",
   data(){
    return{
-     projectName: 'floder后台管理系统',
+     projectName: 'litchi后台管理系统',
      // breadcrumbList:[]
+     selectValue:'',
+     options:[
+       {
+         value: 'zh',
+         label: '中文'
+       }, {
+         value: 'en',
+         label: 'English'
+       }
+     ],
    }
   },
   computed:{
@@ -32,9 +54,16 @@ export default {
       return this.$store.state;
     }
   },
+  methods:{
+    langChange(e){
+      // console.log(e)
+      localStorage.setItem('name_language',e);
+      this.$i18n.locale = e;
+    }
+  },
   created() {
     this.breadcrumbList = this.$route.meta.breadcrumb;
-
+    this.selectValue = localStorage.getItem('name_language') || 'zh'
   }
 
 }

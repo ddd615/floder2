@@ -8,7 +8,6 @@
       <el-table
         ref="multipleTable"
         :data="data"
-        border
         tooltip-effect="dark"
         style="width: 100%"
         @selection-change="handleSelectionChange">
