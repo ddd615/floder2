@@ -8,12 +8,12 @@
           <keep-alive>
             <router-view
               v-if="route.meta.keepAlive"
-              :style="{zIndex: 0,width: viewWidth + 'px', height: viewHeight + 'px', backgroundColor: 'rgba(249, 249, 249, 1)'}"
+              :style="{zIndex: 0,width: viewWidth + 'px', height: viewHeight + 'px', backgroundColor: 'rgba(255, 255, 255, 1)'}"
             ></router-view>
           </keep-alive>
           <router-view
             v-if="!route.meta.keepAlive"
-            :style="{zIndex: 0,width: viewWidth + 'px', height: viewHeight + 'px', backgroundColor: 'rgba(249, 249, 249, 1)'}"
+            :style="{zIndex: 0,width: viewWidth + 'px', height: viewHeight + 'px', backgroundColor: 'rgba(255, 255, 255, 1)'}"
           ></router-view>
         </el-main>
 

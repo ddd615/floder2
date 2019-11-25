@@ -46,7 +46,7 @@
         <slot></slot>
       </el-table>
     </div>
-    <div class="footor" v-if="showFooter">
+    <div class="footor">
       <div class="pager-group">
         <el-pagination
           @size-change="handleSizeChange"

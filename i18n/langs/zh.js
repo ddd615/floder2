@@ -5,6 +5,9 @@ const zh = {
     'username': '用户名',
     'password': '密码',
     'signIn': '登录',
+    'index' : '首页',
+    'manager':'管理员管理',
+    'system':'系统管理'
   },
   // ...zhLocale
 }

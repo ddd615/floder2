@@ -7,7 +7,7 @@
           v-for="(item,index) in breadcrumbList"
           :to="{ path: item.path }"
         >
-          {{item.name}}
+          {{$t(item.name)}}
         </el-breadcrumb-item>
       </el-breadcrumb>
       <div>
@@ -74,11 +74,12 @@ export default {
     color: #57b382;
     background: rgb(20, 31, 41);
     width: 199px;
-    font-size: 15px;
+    font-size: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    letter-spacing: 5px;
   }
   .head-setting{
     display: flex;

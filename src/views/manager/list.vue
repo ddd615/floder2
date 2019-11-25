@@ -1,6 +1,6 @@
 <template>
   <el-row class="page">
-
+<!--    搜索-->
     <el-col :span="24">
       <search
         style="margin: 10px 30px;"
@@ -8,133 +8,155 @@
         @on-search="searchBySearchItem"
       ></search>
     </el-col>
+<!--    按钮-->
     <el-col :span="24" style="margin: 10px 30px;">
       <el-button style="background: rgb(0, 161, 108);border: none" icon="el-icon-plus"  type="primary" @click="toCreate">新建</el-button>
       <el-button icon="el-icon-delete" @click="batchDelete">删除</el-button>
-      <el-button icon="el-icon-circle-check" @click="batchEnable" :disabled="!selectList.findIndex(s=>{return s.status === '启用'}) || selectList.length === 0">启用</el-button>
-      <el-button icon="el-icon-circle-close" @click="batchDisable" :disabled="!selectList.findIndex(s=>{return s.status === '禁用'}) || selectList.length === 0">禁用</el-button>
+<!--      <el-button icon="el-icon-circle-check" @click="batchEnable" :disabled="selectList.findIndex(s=>{return s.status === '启用'}) >=0 || selectList.length === 0">启用</el-button>-->
+<!--      <el-button icon="el-icon-circle-close" @click="batchDisable" :disabled="selectList.findIndex(s=>{return s.status === '禁用'}) >=0 || selectList.length === 0">禁用</el-button>-->
+
+      <el-dropdown :trigger="'click'" @command="handleClick" size="medium" @visible-change="onMenuChange">
+        <el-button icon="el-icon-menu" style="background:#3e5265;color: white ">更多操作<i :class="menu.visible?'el-icon-caret-top':'el-icon-caret-bottom'"></i></el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item
+            icon="el-icon-circle-check"
+            command="启用"
+            :disabled="selectList.findIndex(s=>{return s.status === '启用'}) >=0 || selectList.length === 0"
+            :style="(selectList.findIndex(s=>{return s.status === '启用'}) >=0 || selectList.length === 0)?{'color':'rgba(255,255,255,0.4)','cursor': 'not-allowed'}:{'color':'#fff'}"
+            @click="batchEnable"
+          >
+            启用
+          </el-dropdown-item>
+          <el-dropdown-item
+            icon="el-icon-circle-close"
+            command="禁用"
+            :disabled="selectList.findIndex(s=>{return s.status === '禁用'}) >=0 || selectList.length === 0"
+            :style="(selectList.findIndex(s=>{return s.status === '禁用'}) >=0 || selectList.length === 0)?{'color':'rgba(255,255,255,0.4)'}:{'color':'#fff'}"
+            @click.stop="batchDisable"
+          >
+            禁用
+          </el-dropdown-item>
+          <el-dropdown-item
+            icon="el-icon-edit"
+            command="编辑"
+            :disabled="selectList.length !== 1"
+            :style="(selectList.length !== 1)?{'color':'rgba(255,255,255,0.4)'}:{'color':'#fff'}"
+            @click.stop="handleEdit"
+          >
+            编辑
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </el-col>
+<!--    表格-->
     <el-col :span="24">
-      <i-table
-        @on-transport-selectList="handleTransportSelectList"
-        @on-page-change="handlePageChange"
-        @on-page-size-change="handlePageSizeChange"
-        @on-selection-change="handleSelectionChange"
+      <el-table
         :data="data"
-        :total="total"
-        :curPage="page"
-        :columns="columns"
-        :operates="operates"
+        style="width: 90%;margin-left: 30px"
+        @selection-change="handleSelectionChange"
       >
+        <el-table-column
+          type="selection"
+          width="55">
+        </el-table-column>
+        <el-table-column
+          prop="username"
+          label="账号"
+         >
+        </el-table-column>
+        <el-table-column
+          prop="realname"
+          label="姓名"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="role"
+          label="角色"
+
+        >
+        </el-table-column>
+        <el-table-column
+          prop="phone"
+          label="手机号"
+
+        >
+        </el-table-column>
+        <el-table-column
+          prop="createAt"
+          label="创建时间"
+          sortable
+        >
+        </el-table-column>
+        <el-table-column
+          prop="status"
+          label="状态"
+        >
+        </el-table-column>
         <el-table-column
           fixed="right"
           align="center"
           label="操作"
           width="200">
           <template slot-scope="scope">
-            <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
+<!--            <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>-->
             <el-button @click="handleStatusChange(scope.row)" type="text" size="small">{{scope.row.status.indexOf('启用') >= 0 ? '禁用' : '启用'}}</el-button>
-
           </template>
         </el-table-column>
-      </i-table>
+      </el-table>
+      <div class="footor" >
+        <div class="pager-group">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="page"
+            :page-sizes="[10, 20, 30, 40]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+          </el-pagination>
+        </div>
+      </div>
     </el-col>
+<!--    新建-->
+    <i-create
+      :dialog-visible="createProps.visible"
+      @on-dialog-close="handleClose"
+    >
+
+    </i-create>
+<!--    编辑-->
+    <i-edit
+      :dialog-visible="editProps.visible"
+      :edit-id="editId"
+      @on-dialog-close="handleClose"
+    >
+
+    </i-edit>
   </el-row>
 </template>
 <script>
   import Search from "@/components/search";
-  import ITable from "@/components/table";
-  // import IModal from "@/components/modal";
+  import ICreate from "./create"
+  import IEdit from "./edit"
   import { post } from "@/libs/http/request";
   import Emitter from '@/mixins/emitter'
-  const LIST_URL = "/api/manager/search";
-  const COUNT_URL = "/api/manager/count";
-  const DELETE_URL = "/api/manager/delete";
-  const BATCH_DELETE_URL = "/api/manager/delete";
-  const ENABLE_URL = "/api/manager/enable";
-  const DISABLE_URL = "/api/manager/disable";
+  import { search,count,del,enable,disable } from '@/libs/axios/manager'
   export default {
     mixins:[Emitter],
     data() {
       return {
         model: "manager",
-        columns: [
-          {
-            title: "账号",
-            key: "username",
-            align: "center"
-          },
-          {
-            title: "姓名",
-            key: "realname",
-            align: "center"
-          },
-          // {
-          //   title: "角色",
-          //   key: "",
-          //   align: "center"
-          // },
-          {
-            title: "手机号",
-            align: "center",
-            key: "phone"
-          },
-          {
-            title: "创建时间",
-            sortable: true,
-            key: "createAt",
-            align: "center"
-          },
-          {
-            title: "状态",
-            key: "status",
-            align: "center"
-          }
-        ],
-        operates: {
-          width: 300,
-          fixed: 'right',
-          list: [
-            {
-              id:'1',
-              label: '编辑',
-              type: 'warning',
-              show: true,
-              icon: 'el-icon-edit',
-              plain: true,
-              disabled: false,
-              method: (index, row) => {
-                this.handleEdit(index, row)
-              }
-            },
-            {
-              id:'2',
-              label: '删除',
-              type: 'danger',
-              icon: 'el-icon-delete',
-              show: true,
-              plain: false,
-              disabled: false,
-              method: (index, row) => {
-                this.handleDel(index, row)
-              }
-            },
-            {
-              id:'3',
-              label: '启用',
-              type: 'danger',
-              icon: 'el-icon-delete',
-              show: true,
-              plain: false,
-              disabled: false,
-              method: (index, row) => {
-                this.handleDel(index, row)
-              }
-            }
-          ]
-        }, // 列操作按钮
+        createProps:{
+          visible:false
+        },
+        editProps:{
+          visible:false
+        },
+        menu:{
+          visible:false
+        },
+        editId:0,//编辑id
         data: [],
-        isFinish:false,
         selectList: [],
         sort: { asc: [], desc: [] },
         pageSize: 10,
@@ -180,31 +202,14 @@
       }
     },
     components: {
-      Search,ITable
+      Search,ICreate, IEdit
     },
     methods: {
-      findAllRoles() {
-        // post("/api/role/findAll")
-      },
-      handleChange(date) {
-        this.extraParam.loginStartDate = date[0];
-        this.extraParam.loginEndDate = date[1];
-      },
-      handleClear() {
-        delete this.extraParam.loginStartDate;
-        delete this.extraParam.loginEndDate;
-      },
-      handleEdit(row) {
-        this.$router.push({path:'/manager/create/'+row.id});
-      },
-      handleDel(index,row) {
-        console.log(row);
-        post(`api/${this.model}/delete`,{ id : row.id }, res => {
-          this.$message({
-            message: '删除成功!',
-            type: 'success'
-          })
-        })
+      handleEdit() {
+
+        this.editId = this.selectList[0].id
+        this.editProps.visible = true;
+
       },
       handleStatusChange(row) {
         console.log(row);
@@ -221,7 +226,7 @@
           type: 'warning'
         }).then(() => {
           if (status === '禁用') {
-            post(`api/${_t.model}/disable`,{ id : row.id },res => {
+            disable({ id : row.id },res => {
               _t.$message({
                   type: 'success',
                   message: '已禁用!'
@@ -229,7 +234,7 @@
               _t.search(_t.page);
             })
           }else {
-            post(`api/${_t.model}/enable`,{ id : row.id },res => {
+            enable({ id : row.id },res => {
               _t.$message({
                 type: 'success',
                 message: '已启用!'
@@ -292,7 +297,7 @@
         this.search(1);
       },
       toCreate() {
-        this.$router.push("/manager/create/0");
+        this.createProps.visible = true;
       },
       search(page) {
         let _t = this;
@@ -311,7 +316,7 @@
         ) {
           delete param.pageable.sort;
         }
-        post(LIST_URL, param, res => {
+        search(param, res => {
           let data = res;
           _t.data = data;
           _t.getTotal();
@@ -320,7 +325,7 @@
       getTotal() {
         let _t = this;
         let param = { [this.model]: _t.extraParam };
-        post(COUNT_URL, param, res => {
+        count(param, res => {
           _t.total = parseInt(res);
         });
       },
@@ -343,7 +348,7 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            post(BATCH_DELETE_URL, { ids: ids }, res => {
+            del({ ids: ids }, res => {
               _t.search(_t.page);
               this.$message({
                 type: 'success',
@@ -369,7 +374,7 @@
           type: 'warning'
         }).then(() => {
           selectList.map(s => {
-            post(`api/${this.model}/enable`,{ id : s.id },res => {
+            enable({ id : s.id },res => {
               _t.search(_t.page);
               // this.$message({
               //   type: 'success',
@@ -395,7 +400,7 @@
           type: 'warning'
         }).then(() => {
           selectList.map(s => {
-            post(`api/${this.model}/disable`,{ id : s.id },res => {
+            disable({ id : s.id },res => {
               _t.search(_t.page);
               // this.$message({
               //   type: 'success',
@@ -411,12 +416,10 @@
           });
         });
       },
-      handleSelectionChange(selection){
-        this.selectList = selection;
-      },
+
       delete(id) {
         let _t = this;
-        post(DELETE_URL, { id: id }, res => {
+        del({ id: id }, res => {
           _t.search(_t.page);
         });
       },
@@ -425,6 +428,42 @@
         post(url, { id: id }, res => {
           _t.search(_t.page);
         });
+      },
+      handleClose(){
+        this.createProps.visible = false;
+        this.editProps.visible = false;
+      },
+      handleSelectionChange(val){
+        this.selectList = val;
+      },
+      handleCurrentChange(val) {
+        this.page = val;
+        this.search(this.page);
+      },
+      handleSizeChange(pageSize) {
+        this.pageSize = pageSize;
+
+        this.search(this.page);
+      },
+      onMenuChange(val){
+        console.log(val);
+      },
+      handleClick(command) {
+        switch (command) {
+          case '编辑':
+            console.log('编辑');
+            this.editId = this.selectList[0].id;
+            this.editProps.visible = true;
+            break;
+          case '启用':
+            console.log('启用');
+            this.batchEnable();
+            break;
+          case '禁用':
+            console.log('禁用')
+            this.batchDisable();
+            break;
+        }
       }
     },
     mounted() {
@@ -449,5 +488,8 @@
     color: #00a16c;
     border: 1px solid#00a16c;
     background: white;
+  }
+  .footor{
+    margin:10px 30px;
   }
 </style>

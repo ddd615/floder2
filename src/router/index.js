@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import ElementUI from 'element-ui';
+import i18n from '../../i18n/i18n.js'
 import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router);
@@ -18,7 +19,7 @@ const router = new Router({
       meta:{
         breadcrumb:[
           {
-            name:'首页',
+            name:'message.index',
             path:'/index'
           }
         ],
@@ -45,11 +46,11 @@ const router = new Router({
         keepAlive:true,
         breadcrumb: [
           {
-            name:'首页',
+            name:'message.index',
             path:'/index'
           },
           {
-            name:'管理员列表',
+            name:'message.manager',
             path:'/manager/list'
           }
         ]

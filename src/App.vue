@@ -14,8 +14,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
   @import "../static/font/font.css";
+  @import "./style/dialog.less";
+  @import "./style/table.less";
   *{
     margin: 0;
     padding: 0;
@@ -44,11 +46,32 @@ export default {
     line-height: 35px;
   }
   /*表格行高*/
-  .el-table td, .el-table th{
-    padding: 0;
-  }
-  /*.el-table thead{*/
-  /*  color: #333333;*/
-  /*}*/
 
+  /*.el-dialog{*/
+  /*  .el-dialog__header{*/
+  /*    background: #2c3e50;*/
+  /*  }*/
+  /*}*/
+  /*.footor {*/
+  /*  width: 100%;*/
+  /*  height: 44px;*/
+  /*  padding: 5px;*/
+  /*  .pager-group {*/
+  /*    float: right;*/
+  /*    margin-right: 10px;*/
+  /*    .pager-data {*/
+  /*      display: inline-block;*/
+  /*      margin-top: 5px;*/
+  /*      margin-left: 20px;*/
+  /*      margin-right: 20px;*/
+  /*      .val {*/
+  /*        color: red;*/
+  /*      }*/
+  /*    }*/
+  /*    .pager {*/
+  /*      display: inline-block;*/
+  /*      vertical-align: middle;*/
+  /*    }*/
+  /*  }*/
+  /*}*/
 </style>

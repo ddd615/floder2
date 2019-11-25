@@ -17,6 +17,6 @@ const i18n = new VueI18n({    //从localStorage中取，没有就默认的中文
   silentTranslationWarn: true,
 
 })
-locale.i18n((key, value) => i18n.t(key, value)) //elementui多语言切换
+i18n:(key, value) => i18n.t(key, value) //elementui多语言切换
 
 export default i18n

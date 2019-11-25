@@ -1,6 +1,6 @@
 [
     {
-        "displayName": "系统管理",
+        "displayName": "message.system",
         "icon": "el-icon-setting",
         "mid": 1,
         "children": [

@@ -5,6 +5,9 @@ const en = {
     'username': 'username',
     'password': 'password',
     'signIn': 'signIn',
+    'index' : 'Index',
+    'manager': 'Admin Management',
+    'system': 'System Management'
   },
 
   // ...enLocale

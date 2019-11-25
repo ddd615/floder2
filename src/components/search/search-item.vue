@@ -43,7 +43,7 @@
         format="yyyy-MM-dd"
         type="daterange"
         :placeholder="item.name"
-        range-separator="至"
+        
         start-placeholder="开始日期"
         end-placeholder="结束日期"
         style="width: 200px"
@@ -56,7 +56,7 @@
         format="yyyy-MM-dd hh:mm:ss"
         type="datetimerange"
         :placeholder="item.name"
-        range-separator="至"
+
         start-placeholder="开始日期"
         end-placeholder="结束日期"
         style="width: 290px"

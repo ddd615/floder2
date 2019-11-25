@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="基本信息"
+    title="编辑信息"
     :visible.sync="dialogVisible"
     :modal-append-to-body='false'
     width="30%"
@@ -61,8 +61,9 @@
 
 <script>
   import Upload from "@/components/upload";
+  import { get } from '@/libs/axios/manager'
   export default {
-    name: "dialog",
+    name: "edit",
     components:{
       Upload
     },
@@ -70,6 +71,10 @@
       dialogVisible:{
         type:Boolean,
         default:false,
+      },
+      editId:{
+        type:Number,
+        default: 0
       }
     },
     data(){
@@ -160,6 +165,11 @@
     },
     computed:{
     },
+    watch:{
+      editId(val){
+        this.get(val);
+      }
+    },
     methods:{
       handleClose(){
         // this.visible = false;
@@ -170,6 +180,15 @@
       },
       handleTransportFileList(){
 
+      },
+      get(id) {
+        get({id:id},res => {
+            let keys = Object.keys(res);
+            keys.map(key => {
+              this.formValidate[key] = res[key];
+            });
+
+        });
       }
     }
   }
