@@ -29,7 +29,6 @@
       <el-form-item label="头像" prop="fileList" label-width="100px">
         <upload
           @on-transport-file-list="handleTransportFileList"
-          :file-list="[formValidate.avatar]"
           :max-size="5120"
           :limit="3"
         >
@@ -38,11 +37,6 @@
       </el-form-item>
       <el-form-item label="手机号" prop="phone" label-width="100px">
         <el-input v-model="formValidate.phone" placeholder="输入手机号"></el-input>
-      </el-form-item>
-      <el-form-item label="角色" prop="role" label-width="100px">
-        <el-select v-model="formValidate.role" placeholder="选择角色">
-          <el-option v-for="item,key in []" :value="item.value" :key="key">{{item.label}}</el-option>
-        </el-select>
       </el-form-item>
       <el-form-item label="邮箱" prop="mail" label-width="100px">
         <el-input v-model="formValidate.mail" placeholder="输入邮箱"></el-input>

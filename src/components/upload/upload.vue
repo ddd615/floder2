@@ -1,5 +1,5 @@
 <template>
-    <div v-if="type === 'img'">
+    <div class="upload" v-if="type === 'img'">
       <el-upload
         ref="upload"
         action="api/attachment/upload"
@@ -15,7 +15,7 @@
       >
         <i class="el-icon-plus"></i>
       </el-upload>
-      <el-dialog :visible.sync="dialogVisible">
+      <el-dialog :visible.sync="dialogVisible"  :modal-append-to-body='false'>
         <img width="100%" :src="dialogImageUrl" alt="">
       </el-dialog>
 
@@ -137,5 +137,13 @@ export default {
 </script>
 
 <style scoped>
-
+  .upload /deep/ .el-upload-list__item{
+    width: 100px;
+    height: 100px;
+  }
+  .upload /deep/ .el-upload--picture-card{
+    width: 100px;
+    height: 100px;
+    line-height: 106px;
+  }
 </style>

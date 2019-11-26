@@ -74,4 +74,9 @@ export default {
   /*    }*/
   /*  }*/
   /*}*/
+  .footor{
+    margin:10px 30px;
+    width: 90%;
+    text-align: right;
+  }
 </style>

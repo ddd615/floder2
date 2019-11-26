@@ -54,6 +54,7 @@
         :data="data"
         style="width: 90%;margin-left: 30px"
         @selection-change="handleSelectionChange"
+        @row-click="handleRowClick"
       >
         <el-table-column
           type="selection"
@@ -99,7 +100,7 @@
           width="200">
           <template slot-scope="scope">
 <!--            <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>-->
-            <el-button @click="handleStatusChange(scope.row)" type="text" size="small">{{scope.row.status.indexOf('启用') >= 0 ? '禁用' : '启用'}}</el-button>
+            <el-button @click.stop="handleStatusChange(scope.row)" type="text" size="small">{{scope.row.status.indexOf('启用') >= 0 ? '禁用' : '启用'}}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -180,11 +181,6 @@
             type: "select",
             displayValue: [],
             value: []
-          },
-          {
-            name: "创建时间",
-            key: "createAt",
-            type: "datetimerange"
           },
           {
             name: "状态",
@@ -436,6 +432,9 @@
       handleSelectionChange(val){
         this.selectList = val;
       },
+      handleRowClick(row){
+        this.$router.push({path:'/manager/show/'+row.id})
+      },
       handleCurrentChange(val) {
         this.page = val;
         this.search(this.page);
@@ -491,5 +490,7 @@
   }
   .footor{
     margin:10px 30px;
+    width: 90%;
+    text-align: right;
   }
 </style>

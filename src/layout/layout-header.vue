@@ -21,7 +21,35 @@
           >
           </el-option>
         </el-select>
-        <span>{{store.user.nickname}}</span>
+        <el-dropdown @command="handleClick" v-if="$route.path !== '/login'">
+           <span class="el-dropdown-link">
+             {{store.user.nickname}}<i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item icon="el-icon-edit" command="editPsd">修改密码</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-switch-button" command="logout">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <el-dialog
+          title="修改密码"
+          :visible.sync="dialogVisible"
+          :modal-append-to-body='false'
+          :append-to-body="true"
+          width="50%"
+          :before-close="handleClose">
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="密码" prop="pass">
+              <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="checkPass">
+              <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="handleClose">取 消</el-button>
+            <el-button type="primary" @click="handleConfirm('ruleForm')">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
     </div>
   </el-header>
@@ -31,10 +59,30 @@
 export default {
   name: "layout-header",
   data(){
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'));
+      } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('checkPass');
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'));
+      } else if (value !== this.ruleForm.pass) {
+        callback(new Error('两次输入密码不一致!'));
+      } else {
+        callback();
+      }
+    };
    return{
      projectName: 'litchi后台管理系统',
      // breadcrumbList:[]
      selectValue:'',
+     language:'中文',
      options:[
        {
          value: 'zh',
@@ -44,6 +92,19 @@ export default {
          label: 'English'
        }
      ],
+     dialogVisible:false,
+     rules: {
+       pass: [
+         { validator: validatePass, trigger: 'blur' }
+       ],
+       checkPass: [
+         { validator: validatePass2, trigger: 'blur' }
+       ],
+     },
+     ruleForm: {
+       pass: '',
+       checkPass: '',
+     },
    }
   },
   computed:{
@@ -59,6 +120,38 @@ export default {
       // console.log(e)
       localStorage.setItem('name_language',e);
       this.$i18n.locale = e;
+    },
+    handleClick(val) {
+      switch (val) {
+        case 'editPsd':
+          this.dialogVisible = true;
+          break;
+        case 'logout':
+          this.$post('api/user/logout',{},res => {
+            this.$message({
+              message: '退出成功',
+              type: 'success'
+            });
+            this.$store.commit('SAVE_ITEM',{
+              user:''
+            });
+            this.$router.replace({path:'/login'});
+          });
+          break;
+      }
+    },
+    handleClose(){
+      this.dialogVisible = false;
+    },
+    handleConfirm(formName){
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!');
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
     }
   },
   created() {
@@ -91,6 +184,13 @@ export default {
     background: #fff;
     >span{
       font-size: 12px;
+    }
+    /deep/.el-input__inner{
+      border: none;
+      text-align: right;
+    }
+    /deep/.el-input{
+      width: 100px;
     }
   }
 </style>

@@ -21,10 +21,11 @@ instance.defaults.timeout = 50000; // timeout
 
 // request interceptors
 instance.interceptors.request.use(
-  request => {
-    return request;
-  },
+  // request => {
+  //   return request;
+  // },
   config => {
+    console.log(store.state.user.token)
     // if token exist, add Access-Token to request header
     if (store.state.user.token) {
       config.headers['Access-Token'] = store.state.user.token;
@@ -42,14 +43,13 @@ instance.interceptors.request.use(
       })
     }
     // change data to formData
-    let keys = Object.keys(config.data);
-    let formData = new FormData();
-    for (let i = 0, len = keys.length; i < len; i++) {
-      let key = keys[i];
-      formData.append(key, config.data[key]);
-    }
-    // config.data = qs.stringify(config.data);
-    config.data = formData;
+    // let keys = Object.keys(config.data);
+    // let formData = new FormData();
+    // for (let i = 0, len = keys.length; i < len; i++) {
+    //   let key = keys[i];
+    //   formData.append(key, config.data[key]);
+    // }
+    // config.data = formData;
     return config;
   },
   error => {

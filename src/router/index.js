@@ -58,8 +58,8 @@ const router = new Router({
       component: () => import('@/views/manager/list')
     },
     {
-      path:'/manager/create/:id',
-      name:'managerCreate',
+      path:'/manager/show/:id',
+      name:'managerShow',
       meta:{
         isShowHeader:true,
         isShowLeftSider:true,
@@ -74,11 +74,11 @@ const router = new Router({
           },
           {
             name:'管理员详情',
-            path:'/manager/create/:id'
+            path:'/manager/show/:id'
           }
         ]
       },
-      component: () => import('@/views/manager/create')
+      component: () => import('@/views/manager/show')
     }
   ]
 });

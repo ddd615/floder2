@@ -3,7 +3,7 @@
     title="编辑信息"
     :visible.sync="dialogVisible"
     :modal-append-to-body='false'
-    width="30%"
+    width="50%"
     :before-close="handleClose">
 
     <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="200px">
@@ -38,11 +38,6 @@
       </el-form-item>
       <el-form-item label="手机号" prop="phone" label-width="100px">
         <el-input v-model="formValidate.phone" placeholder="输入手机号"></el-input>
-      </el-form-item>
-      <el-form-item label="角色" prop="role" label-width="100px">
-        <el-select v-model="formValidate.role" placeholder="选择角色">
-          <el-option v-for="item,key in []" :value="item.value" :key="key">{{item.label}}</el-option>
-        </el-select>
       </el-form-item>
       <el-form-item label="邮箱" prop="mail" label-width="100px">
         <el-input v-model="formValidate.mail" placeholder="输入邮箱"></el-input>
