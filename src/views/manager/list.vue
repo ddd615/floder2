@@ -9,7 +9,7 @@
       ></search>
     </el-col>
 <!--    按钮-->
-    <el-col :span="24" style="margin: 10px 30px;">
+    <el-col :span="21" style="margin: 10px 30px;">
       <el-button style="background: rgb(0, 161, 108);border: none" icon="el-icon-plus"  type="primary" @click="toCreate">新建</el-button>
       <el-button icon="el-icon-delete" @click="batchDelete">删除</el-button>
 <!--      <el-button icon="el-icon-circle-check" @click="batchEnable" :disabled="selectList.findIndex(s=>{return s.status === '启用'}) >=0 || selectList.length === 0">启用</el-button>-->
@@ -47,6 +47,17 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+      <div class="pager-group">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="page"
+          :page-sizes="[10, 20, 30, 40]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, next, jumper"
+          :total="total">
+        </el-pagination>
+      </div>
     </el-col>
 <!--    表格-->
     <el-col :span="24">
@@ -54,7 +65,7 @@
         :data="data"
         style="width: 90%;margin-left: 30px"
         @selection-change="handleSelectionChange"
-        @row-click="handleRowClick"
+        @row-dblclick="handleRowClick"
       >
         <el-table-column
           type="selection"
@@ -104,19 +115,19 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="footor" >
-        <div class="pager-group">
-          <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="page"
-            :page-sizes="[10, 20, 30, 40]"
-            :page-size="pageSize"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="total">
-          </el-pagination>
-        </div>
-      </div>
+<!--      <div class="footor" >-->
+<!--        <div class="pager-group">-->
+<!--          <el-pagination-->
+<!--            @size-change="handleSizeChange"-->
+<!--            @current-change="handleCurrentChange"-->
+<!--            :current-page="page"-->
+<!--            :page-sizes="[10, 20, 30, 40]"-->
+<!--            :page-size="pageSize"-->
+<!--            layout="total, sizes, prev, pager, next, jumper"-->
+<!--            :total="total">-->
+<!--          </el-pagination>-->
+<!--        </div>-->
+<!--      </div>-->
     </el-col>
 <!--    新建-->
     <i-create

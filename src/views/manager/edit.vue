@@ -6,27 +6,11 @@
     width="50%"
     :before-close="handleClose">
 
-    <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="200px">
-      <el-form-item label="启用状态" prop="status" label-width="100px">
-        <el-radio-group v-model="formValidate.status">
-          <el-radio label="启用">启用</el-radio>
-          <el-radio label="禁用">禁用</el-radio>
-        </el-radio-group>
-        <div style="font-size: 12px">* 禁用则该账户不能登录</div>
-      </el-form-item>
-      <el-form-item label="账号" prop="username" label-width="100px">
-        <el-input v-model="formValidate.username" placeholder="输入账号"></el-input>
-      </el-form-item>
-      <el-form-item label="登录密码" prop="password" label-width="100px">
-        <el-input type="password" v-model="formValidate.password" placeholder="输入账号"></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="confirmPassword" label-width="100px">
-        <el-input type="password" v-model="formValidate.confirmPassword" placeholder="确认密码"></el-input>
-      </el-form-item>
-      <el-form-item label="姓名" prop="realname" label-width="100px">
+    <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="150px">
+      <el-form-item label="姓名" prop="realname">
         <el-input v-model="formValidate.realname" placeholder="输入姓名"></el-input>
       </el-form-item>
-      <el-form-item label="头像" prop="fileList" label-width="100px">
+      <el-form-item label="头像" prop="fileList" >
         <upload
           @on-transport-file-list="handleTransportFileList"
           :file-list="[formValidate.avatar]"
@@ -36,20 +20,21 @@
 
         </upload>
       </el-form-item>
-      <el-form-item label="手机号" prop="phone" label-width="100px">
+      <el-form-item label="手机号" prop="phone" >
         <el-input v-model="formValidate.phone" placeholder="输入手机号"></el-input>
       </el-form-item>
-      <el-form-item label="邮箱" prop="mail" label-width="100px">
+      <el-form-item label="邮箱" prop="mail" >
         <el-input v-model="formValidate.mail" placeholder="输入邮箱"></el-input>
       </el-form-item>
-      <el-form-item label="备注" prop="comment" label-width="100px">
+      <el-form-item label="备注" prop="comment" >
         <el-input v-model="formValidate.comment" placeholder="输入备注"></el-input>
       </el-form-item>
 
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="handleClose">取 消</el-button>
+
       <el-button type="primary" @click="handleConfirm">确 定</el-button>
+      <el-button type="info" @click="handleClose">取 消</el-button>
     </div>
   </el-dialog>
 </template>

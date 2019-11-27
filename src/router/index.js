@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import ElementUI from 'element-ui';
-import i18n from '../../i18n/i18n.js'
-import HelloWorld from '@/components/HelloWorld'
+
 
 Vue.use(Router);
 Vue.use(ElementUI);

@@ -32,7 +32,7 @@
     name: "Login",
     data() {
       return {
-        projectName: "litchi后台管理系统",
+        projectName: "lychee后台管理系统",
         formValidate: {
           username: "admin",
           password: "123456"

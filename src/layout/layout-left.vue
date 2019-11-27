@@ -1,6 +1,6 @@
 <template>
   <el-aside
-    width="200px"
+    width="201px"
     :style="{
     position: 'fixed',
     height: '100vh',

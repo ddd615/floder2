@@ -7,7 +7,7 @@
     :before-close="handleClose">
 
     <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="200px">
-      <el-form-item label="启用状态" prop="status" label-width="100px">
+      <el-form-item label="启用状态" prop="status" label-width="150px">
         <el-radio-group v-model="formValidate.status">
           <el-radio label="启用">启用</el-radio>
           <el-radio label="禁用">禁用</el-radio>

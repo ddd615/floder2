@@ -15,13 +15,14 @@ export default {
 </script>
 
 <style lang="less">
-  @import "../static/font/font.css";
   @import "./style/dialog.less";
   @import "./style/table.less";
+  @import "./style/layoutLeft.less";
+  @import "./style/button.less";
   *{
     margin: 0;
     padding: 0;
-    font-family: '思源黑体';
+    font-family: 'Roboto','PingFang SC','Noto Sans CJK','WenQuanYi Micro Hei','Microsoft YaHei';
   }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

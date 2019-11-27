@@ -1,5 +1,5 @@
 <template>
-  <el-header style="position:fixed;top: 0;width:100%;display: flex;padding: 0;height: 48px">
+  <el-header style="z-index:2;position:fixed;top: 0;width:100%;display: flex;padding: 0;height: 48px">
     <div class="sider-logo">{{$t('message.projectName')}}</div>
     <div class="head-setting">
       <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -23,7 +23,7 @@
         </el-select>
         <el-dropdown @command="handleClick" v-if="$route.path !== '/login'">
            <span class="el-dropdown-link">
-             {{store.user.nickname}}<i class="el-icon-arrow-down el-icon--right"></i>
+             {{store.user.nickname}}
             </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item icon="el-icon-edit" command="editPsd">修改密码</el-dropdown-item>
@@ -166,7 +166,7 @@ export default {
   .sider-logo {
     color: #57b382;
     background: rgb(20, 31, 41);
-    width: 199px;
+    width: 200px;
     font-size: 22px;
     display: flex;
     align-items: center;
@@ -192,5 +192,26 @@ export default {
     /deep/.el-input{
       width: 100px;
     }
+  }
+  .el-dropdown-menu{
+    background: #ffffff;
+    width: 123px;
+    padding: 6px 0;
+    font-size: 14px;
+    margin: 0;
+    border-radius:0;
+    .el-dropdown-menu__item{
+      color: #606266;
+      &:hover{
+        background: #f5f7fa;
+        color: #606266;
+      }
+    }
+    .popper__arrow{
+      opacity: 1;
+    }
+  }
+  .head-setting/deep/.el-select__caret{
+    opacity: 0!important;
   }
 </style>
