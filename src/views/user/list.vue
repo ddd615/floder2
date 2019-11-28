@@ -1,6 +1,6 @@
 <template>
   <el-row class="page">
-<!--    搜索-->
+    <!--    搜索-->
     <el-col :span="24">
       <search
         style="width: 95%;margin: 10px auto"
@@ -8,7 +8,7 @@
         @on-search="searchBySearchItem"
       ></search>
     </el-col>
-<!--    按钮和分页-->
+    <!--    按钮和分页-->
     <el-col :span="24">
       <div style="width: 95%;margin: 10px auto;">
         <el-button style="background: rgb(0, 161, 108);border: none" icon="el-icon-plus"  type="primary" @click="toCreate">新建</el-button>
@@ -58,7 +58,7 @@
         </div>
       </div>
     </el-col>
-<!--    表格-->
+    <!--    表格-->
     <el-col :span="24">
       <el-table
         :data="data"
@@ -71,18 +71,13 @@
           width="55">
         </el-table-column>
         <el-table-column
-          prop="username"
-          label="账号"
-         >
+          prop="id"
+          label="User ID"
+        >
         </el-table-column>
         <el-table-column
-          prop="realname"
-          label="姓名"
-          >
-        </el-table-column>
-        <el-table-column
-          prop="role"
-          label="角色"
+          prop="nickname"
+          label="昵称"
         >
         </el-table-column>
         <el-table-column
@@ -112,18 +107,18 @@
         </el-table-column>
       </el-table>
     </el-col>
-<!--    新建-->
-    <i-create
-      :dialog-visible="createProps.visible"
-      @on-dialog-close="handleClose"
-    />
+<!--    &lt;!&ndash;    新建&ndash;&gt;-->
+<!--    <i-create-->
+<!--      :dialog-visible="createProps.visible"-->
+<!--      @on-dialog-close="handleClose"-->
+<!--    />-->
 
-<!--    编辑-->
-    <i-edit
-      :dialog-visible="editProps.visible"
-      :edit-id="editId"
-      @on-dialog-close="handleClose"
-   />
+<!--    &lt;!&ndash;    编辑&ndash;&gt;-->
+<!--    <i-edit-->
+<!--      :dialog-visible="editProps.visible"-->
+<!--      :edit-id="editId"-->
+<!--      @on-dialog-close="handleClose"-->
+<!--    />-->
 
 
   </el-row>
@@ -131,16 +126,16 @@
 <script>
   import Search from "@/components/search";
   import ICreate from "./create"
-  import IEdit from "./edit"
+  // import IEdit from "./edit"
   import {post} from "@/libs/http/request";
   import Emitter from '@/mixins/emitter'
-  import {search, count, del, enable, disable} from '@/libs/axios/manager'
+  import {search, count, del, enable, disable} from '@/libs/axios/user'
 
   export default {
     mixins: [Emitter],
     data() {
       return {
-        model: "manager",
+        model: "user",
         createProps: {
           visible: false
         },
@@ -160,21 +155,14 @@
         extraParam: {},
         searchItems: [
           {
-            name: "账号",
-            key: "username",
+            name: "手机号",
+            key: "phone",
             type: "string"
           },
           {
-            name: "姓名",
-            key: "realname",
-            type: "string"
-          },
-          {
-            name: "角色",
-            key: "",
-            type: "select",
-            displayValue: [],
-            value: []
+            name: "最近登录时间",
+            key: "accessAt",
+            type: "daterange",
           },
           {
             name: "状态",
@@ -192,7 +180,7 @@
       }
     },
     components: {
-      Search, ICreate, IEdit
+      Search, ICreate
     },
     methods: {
       handleEdit() {

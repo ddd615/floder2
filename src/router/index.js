@@ -78,6 +78,46 @@ const router = new Router({
         ]
       },
       component: () => import('@/views/manager/show')
+    },
+    {
+      path:'/user/list',
+      name:'userList',
+      meta:{
+        isShowHeader:true,
+        isShowLeftSider:true,
+        keepAlive:true,
+        breadcrumb: [
+          {
+            name:'message.index',
+            path:'/index'
+          },
+          {
+            name:'message.user',
+            path:'/user/list'
+          }
+        ]
+      },
+      component: () => import('@/views/user/list')
+    },
+    {
+      path:'/message/list',
+      name:'messageList',
+      meta:{
+        isShowHeader:true,
+        isShowLeftSider:true,
+        keepAlive:true,
+        breadcrumb: [
+          {
+            name:'message.index',
+            path:'/index'
+          },
+          {
+            name:'message.message',
+            path:'/message/list'
+          }
+        ]
+      },
+      component: () => import('@/views/message/list')
     }
   ]
 });

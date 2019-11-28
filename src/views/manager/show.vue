@@ -1,10 +1,10 @@
 <template>
     <div >
-      <div style="margin-top: 20px;display: flex">
+      <el-col :span="6">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>基本信息</span>
-            <el-dropdown style="position: absolute;right: 0;top: -11px"  @command="handleClick">
+            <el-dropdown style="position: absolute;right: -9px;top: -6px"  @command="handleClick">
               <el-button type="text">
                 <img src="../../assets/more.png" alt="" width="10" height="8">
               </el-button>
@@ -18,7 +18,7 @@
           <div class="text item" style="display: flex;align-items: center">
             <span class="text_label">头像：</span>
             <el-image
-              style="width: 80px; height: 80px;border-radius: 40px;"
+              style="width: 50px; height: 50px;border-radius: 40px;"
               :src="'https://www.gunghobox.com/images/'+manager.avatar"
               @click="imgVisible = true">
             </el-image>
@@ -44,6 +44,8 @@
             {{manager.comment}}
           </div>
         </el-card>
+      </el-col>
+      <el-col :span="18">
         <el-card class="box-card-large">
           <el-tabs v-model="activeName">
             <el-tab-pane label="角色设置" name="first">
@@ -57,7 +59,7 @@
                       :current-page="page"
                       :page-sizes="[10, 20, 30, 40]"
                       :page-size="pageSize"
-                      layout="total, sizes, prev, next, jumper"
+                      layout="total, sizes,jumper,prev,next"
                       :total="total">
                     </el-pagination>
                   </div>
@@ -65,7 +67,7 @@
 
                 <el-table
                   :data="roleList"
-                  style="width: 90%;margin-left: 30px"
+                  style="width: 100%"
                   @selection-change="handleSelectionChange"
                   @row-click="handleRowClick"
                 >
@@ -90,7 +92,9 @@
 
           </el-tabs>
         </el-card>
-      </div>
+      </el-col>
+
+
       <i-edit
         :dialog-visible="editProps.visible"
         :edit-id="editId"
@@ -132,151 +136,160 @@
 </template>
 
 <script>
-  import { get,enable,disable } from '@/libs/axios/manager'
-  import { search,count } from '@/libs/axios/role'
+  import {get, enable, disable} from '@/libs/axios/manager'
+  import {search, count} from '@/libs/axios/role'
   import previewImg from '@/components/previewImg/previewImg.vue'
   import IEdit from './edit'
-    export default {
-        name: "show",
-      components:{
-        IEdit,previewImg
+
+  export default {
+    name: "show",
+    components: {
+      IEdit, previewImg
+    },
+    data() {
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.ruleForm.checkPass !== '') {
+            this.$refs.ruleForm.validateField('checkPass');
+          }
+          callback();
+        }
+      };
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.ruleForm.pass) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
+      return {
+        manager: {},
+        editProps: {
+          visible: false
+        },
+        imgVisible: false,
+        sercetVisible: false,
+        id: this.$route.params.id,
+        editId: 0,
+        activeName: 'first',
+        page: 1,
+        pageSize: 10,
+        sort: {desc: ['id']},
+        roleList: [],
+        total: 0,
+        rules: {
+          pass: [
+            {validator: validatePass, trigger: 'blur'}
+          ],
+          checkPass: [
+            {validator: validatePass2, trigger: 'blur'}
+          ],
+        },
+        ruleForm: {
+          pass: '',
+          checkPass: '',
+        },
+      }
+    },
+    created() {
+      this.get();
+      this.roleSearch();
+    },
+    methods: {
+      get() {
+        get({id: this.id}, res => {
+          this.manager = res;
+        });
       },
-      data() {
-        var validatePass = (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('请输入密码'));
-          } else {
-            if (this.ruleForm.checkPass !== '') {
-              this.$refs.ruleForm.validateField('checkPass');
-            }
-            callback();
+      roleSearch() {
+        let param = {
+          pageable: {
+            page: this.page,
+            pageSize: this.pageSize,
+            sort: this.sort
           }
         };
-        var validatePass2 = (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('请再次输入密码'));
-          } else if (value !== this.ruleForm.pass) {
-            callback(new Error('两次输入密码不一致!'));
-          } else {
-            callback();
-          }
-        };
-          return{
-            manager:{},
-            editProps:{
-              visible:false
-            },
-            imgVisible:false,
-            sercetVisible:false,
-            id:this.$route.params.id,
-            editId:0,
-            activeName: 'first',
-            page:1,
-            pageSize:10,
-            sort:{desc:['id']},
-            roleList:[],
-            total:0,
-            rules: {
-              pass: [
-                { validator: validatePass, trigger: 'blur' }
-              ],
-              checkPass: [
-                { validator: validatePass2, trigger: 'blur' }
-              ],
-            },
-            ruleForm: {
-              pass: '',
-              checkPass: '',
-            },
-          }
+
+        search(param, res => {
+          this.roleList = res;
+          this.roleCount();
+        });
+
       },
-      created(){
-        this.get();
+      roleCount() {
+        count({}, res => {
+          this.total = res;
+        })
+      },
+      handleSelectionChange() {
+
+      },
+      handleRowClick() {
+
+      },
+      handleSizeChange(val) {
+        this.pageSize = val;
         this.roleSearch();
       },
-      methods:{
-          get(){
-            get({id:this.id},res => {
-               this.manager = res;
-            });
-          },
-          roleSearch(){
-            let param = {
-              pageable:{
-                page: this.page,
-                pageSize: this.pageSize,
-                sort: this.sort
-              }
-            };
-
-            search(param,res => {
-              this.roleList = res;
-              this.roleCount();
-            });
-
-          },
-          roleCount(){
-            count({},res => {
-              this.total = res;
-            })
-          },
-        handleSelectionChange(){
-
-        },
-        handleRowClick(){
-
-        },
-        handleSizeChange(val){
-            this.pageSize = val;
-            this.roleSearch();
-        },
-        handleCurrentChange(val){
-            this.page = val;
-            this.roleSearch();
-        },
-        handleClose(){
-          this.editProps.visible = false;
-          this.imgVisible = false;
-          this.sercetVisible = false;
-        },
-        handleClick(command) {
-          switch (command) {
-            case '编辑':
-              this.editId = this.id;
-              this.editProps.visible = true;
-              break;
-            case '修改密码':
-              this.sercetVisible = true;
-              break;
-            case '状态':
-              let status = this.manager.status;
-              if (status === '禁用') {
-                enable({id:this.id},res => {
-                  this.get();
-                })
-              } else {
-                disable({id:this.id},res => {
-                  this.get();
-                })
-              }
-              break;
-          }
-        },
-        handleConfirm(formName){
-          this.$refs[formName].validate((valid) => {
-            if (valid) {
-              alert('submit!');
+      handleCurrentChange(val) {
+        this.page = val;
+        this.roleSearch();
+      },
+      handleClose() {
+        this.editProps.visible = false;
+        this.imgVisible = false;
+        this.sercetVisible = false;
+      },
+      handleClick(command) {
+        switch (command) {
+          case '编辑':
+            this.editId = this.id;
+            this.editProps.visible = true;
+            break;
+          case '修改密码':
+            this.sercetVisible = true;
+            break;
+          case '状态':
+            let status = this.manager.status;
+            if (status === '禁用') {
+              enable({id: this.id}, res => {
+                this.$message({
+                  type: 'success',
+                  message: '已启用!'
+                });
+                this.get();
+              })
             } else {
-              console.log('error submit!!');
-              return false;
+              disable({id: this.id}, res => {
+                this.$message({
+                  type: 'success',
+                  message: '已禁用!'
+                });
+                this.get();
+              })
             }
-          });
-        },
-        reload(){
-            this.roleSearch();
+            break;
         }
+      },
+      handleConfirm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      reload() {
+        this.roleSearch();
       }
     }
+  }
 </script>
 
 <style scoped>
@@ -305,12 +318,12 @@
   }
 
   .box-card {
-    width: 20%;
+    width: 92%;
     margin: 20px;
     display: inline-block;
   }
   .box-card-large{
-    width: 70%;
+    width: 92%;
     display: inline-block;
     margin: 20px;
   }
@@ -323,6 +336,6 @@
   .table-button{
     display: flex;
     justify-content: space-between;
-    padding: 5px 30px;
+    padding: 5px 0;
   }
 </style>

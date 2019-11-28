@@ -7,7 +7,8 @@ const en = {
     'signIn': 'signIn',
     'index' : 'Index',
     'manager': 'Admin Management',
-    'system': 'System Management'
+    'system': 'System Management',
+    'message': 'Message Management'
   },
 
   // ...enLocale

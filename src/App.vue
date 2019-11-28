@@ -6,12 +6,13 @@
 
 <script>
   import Layout from '@/layout'
-export default {
-  name: 'App',
-  components:{
-    Layout
+
+  export default {
+    name: 'App',
+    components: {
+      Layout
+    }
   }
-}
 </script>
 
 <style lang="less">
@@ -19,6 +20,7 @@ export default {
   @import "./style/table.less";
   @import "./style/layoutLeft.less";
   @import "./style/button.less";
+  @import "./style/card.less";
   *{
     margin: 0;
     padding: 0;
@@ -31,14 +33,8 @@ export default {
   color: #2c3e50;
 
 }
-  .el-button{
-    border-radius: 2px;
-    padding: 12px 16px;
-  }
-  .el-button--primary{
-    background: #00a16c;
-    border: none;
-  }
+
+
   .el-input{
     width: 200px;
   }

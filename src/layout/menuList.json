@@ -15,16 +15,6 @@
                 "mid": 0
             },
             {
-                "displayName": "教师管理",
-                "link": "/teacher/list",
-                "mid": 0
-            },
-            {
-                "displayName": "桌椅归属管理",
-                "link": "/agency/list",
-                "mid": 0
-            },
-            {
                 "displayName": "APP版本管理",
                 "link": "/version/list",
                 "mid": 0
@@ -40,63 +30,16 @@
                 "displayName": "用户列表",
                 "link": "/user/list",
                 "mid": 0
-            },
-            {
-                "displayName": "平板用户列表",
-                "link": "/padUser/list",
-                "mid": 0
-            },
-            {
-                "displayName": "作业详情",
-                "link": "/work/list",
-                "mid": 0
-            },
-            {
-                "displayName": "批阅统计",
-                "link": "/check/list",
-                "mid": 0
             }
         ]
     },
-    {
-        "displayName": "会员管理",
-        "icon": "el-icon-s-custom",
-        "mid": 1,
-        "children": [
-            {
-                "displayName": "价格订单管理",
-                "link": "/order/list",
-                "mid": 0
-            }
-        ]
-    },
-    {
-        "displayName": "桌椅管理",
-        "icon": "el-icon-data-board",
-        "mid": 1,
-        "children": [
-            {
-                "displayName": "桌椅列表",
-                "link": "/device/list",
-                "mid": 0
-            }
-        ]
-    },
+
     {
         "displayName": "内容管理",
         "icon": "el-icon-tickets",
         "mid": 1,
         "children": [
-            {
-                "displayName": "网校管理",
-                "link": "/school/list",
-                "mid": 0
-            },
-            {
-                "displayName": "平板视频管理",
-                "link": "/video/list",
-                "mid": 0
-            },
+
             {
                 "displayName": "系统文章管理",
                 "link": "/page/list",
@@ -117,7 +60,7 @@
         ]
     },
     {
-        "displayName": "消息管理",
+        "displayName": "message.message",
         "icon": "el-icon-chat-dot-square",
         "mid": 1,
         "children": [

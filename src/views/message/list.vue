@@ -1,6 +1,6 @@
 <template>
   <el-row class="page">
-<!--    搜索-->
+    <!--    搜索-->
     <el-col :span="24">
       <search
         style="width: 95%;margin: 10px auto"
@@ -8,7 +8,7 @@
         @on-search="searchBySearchItem"
       ></search>
     </el-col>
-<!--    按钮和分页-->
+    <!--    按钮和分页-->
     <el-col :span="24">
       <div style="width: 95%;margin: 10px auto;">
         <el-button style="background: rgb(0, 161, 108);border: none" icon="el-icon-plus"  type="primary" @click="toCreate">新建</el-button>
@@ -58,7 +58,7 @@
         </div>
       </div>
     </el-col>
-<!--    表格-->
+    <!--    表格-->
     <el-col :span="24">
       <el-table
         :data="data"
@@ -71,23 +71,23 @@
           width="55">
         </el-table-column>
         <el-table-column
-          prop="username"
-          label="账号"
-         >
-        </el-table-column>
-        <el-table-column
-          prop="realname"
-          label="姓名"
-          >
-        </el-table-column>
-        <el-table-column
-          prop="role"
-          label="角色"
+          prop="id"
+          label="消息ID"
         >
         </el-table-column>
         <el-table-column
-          prop="phone"
-          label="手机号"
+          prop="title"
+          label="消息标题"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="scope"
+          label="推送对象"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="type"
+          label="推送方式"
         >
         </el-table-column>
         <el-table-column
@@ -96,45 +96,32 @@
           sortable
         >
         </el-table-column>
-        <el-table-column
-          prop="status"
-          label="状态"
-        >
-        </el-table-column>
-        <el-table-column
-          fixed="right"
-          align="center"
-          label="操作"
-          width="200">
-          <template slot-scope="scope">
-            <el-button @click.stop="handleStatusChange(scope.row)" type="text" size="small">{{scope.row.status.indexOf('启用') >= 0 ? '禁用' : '启用'}}</el-button>
-          </template>
-        </el-table-column>
+
       </el-table>
     </el-col>
-<!--    新建-->
-    <i-create
-      :dialog-visible="createProps.visible"
-      @on-dialog-close="handleClose"
-    />
+<!--    &lt;!&ndash;    新建&ndash;&gt;-->
+<!--    <i-create-->
+<!--      :dialog-visible="createProps.visible"-->
+<!--      @on-dialog-close="handleClose"-->
+<!--    />-->
 
-<!--    编辑-->
-    <i-edit
-      :dialog-visible="editProps.visible"
-      :edit-id="editId"
-      @on-dialog-close="handleClose"
-   />
+<!--    &lt;!&ndash;    编辑&ndash;&gt;-->
+<!--    <i-edit-->
+<!--      :dialog-visible="editProps.visible"-->
+<!--      :edit-id="editId"-->
+<!--      @on-dialog-close="handleClose"-->
+<!--    />-->
 
 
   </el-row>
 </template>
 <script>
   import Search from "@/components/search";
-  import ICreate from "./create"
-  import IEdit from "./edit"
+  // import ICreate from "./create"
+  // import IEdit from "./edit"
   import {post} from "@/libs/http/request";
   import Emitter from '@/mixins/emitter'
-  import {search, count, del, enable, disable} from '@/libs/axios/manager'
+  import {search, count, del, enable, disable} from '@/libs/axios/message'
 
   export default {
     mixins: [Emitter],
@@ -192,7 +179,7 @@
       }
     },
     components: {
-      Search, ICreate, IEdit
+      Search,
     },
     methods: {
       handleEdit() {

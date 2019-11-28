@@ -7,7 +7,9 @@ const zh = {
     'signIn': '登录',
     'index' : '首页',
     'manager':'管理员管理',
-    'system':'系统管理'
+    'system':'系统管理',
+    'message':'消息管理',
+    'user':'用户管理'
   },
   // ...zhLocale
 }
