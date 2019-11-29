@@ -9,53 +9,38 @@
               <img src="../../assets/more.png" alt="" width="10" height="8">
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="状态">启用</el-dropdown-item>
-              <el-dropdown-item command="状态">禁用</el-dropdown-item>
+              <el-dropdown-item command="状态" v-if="advice.status === '待处理'">标记已处理</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
         <div class="text item">
           <span class="text_label">User ID：</span>
-          {{user.id}}
+          {{advice.id}}
         </div>
         <div class="text item">
-          <span class="text_label">启用状态：</span>
-          {{user.status}}
+          <span class="text_label">状态：</span>
+          {{advice.status}}
         </div>
         <div class="text item">
           <span class="text_label">手机号：</span>
-          {{user.phone}}
+          {{advice.advisorPhone}}
         </div>
         <div class="text item">
-          <span class="text_label">昵称：</span>
-          {{user.nickname}}
+          <span class="text_label">反馈时间：</span>
+          {{advice.createAt}}
         </div>
         <div class="text item">
-          <span class="text_label">邮箱：</span>
-          {{user.email}}
+          <span class="text_label">反馈内容：</span>
+          {{advice.content}}
         </div>
-        <div class="text item">
-          <span class="text_label">注册时间：</span>
-          {{user.createAt}}
-        </div>
-        <div class="text item">
-          <span class="text_label">最近登录时间：</span>
-          {{user.accessAt}}
-        </div>
-        <div class="text item">
-          <span class="text_label">备注：</span>
-          {{user.comment}}
-        </div>
+
       </el-card>
     </el-col>
     <el-col :span="18">
       <el-card class="box-card-large">
         <el-tabs v-model="activeName">
-          <el-tab-pane label="账户信息" name="first">
-            账户信息
-          </el-tab-pane>
-          <el-tab-pane label="设备信息" name="second">
-            设备信息
+          <el-tab-pane label="其他信息" name="first">
+            其他信息
           </el-tab-pane>
         </el-tabs>
       </el-card>
@@ -74,25 +59,25 @@
 </template>
 
 <script>
-  import {get, enable, disable, findById} from '@/libs/axios/user'
+  import {get, enable, disable, findById} from '@/libs/axios/advice'
 
 
   export default {
     name: "show",
     data() {
       return {
-        user: {},
+        advice: {},
         id: this.$route.params.id,
         activeName: 'first',
       }
     },
     created() {
-      this.findById();
+      this.get();
     },
     methods: {
-      findById() {
-        findById({id: this.id}, res => {
-          this.user = res;
+      get() {
+        get({id: this.id}, res => {
+          this.advice = res;
         });
       },
       handleClick(command){

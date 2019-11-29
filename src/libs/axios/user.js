@@ -61,3 +61,12 @@ export function disable(param, callback) {
     }
   })
 }
+
+export function findById(param, callback) {
+  axios.post(`api/${model}/findById`, param).then(data => {
+    if (data !== undefined && data !== '' && data !== null) {
+      // callback when data is exist
+      callback(data)
+    }
+  })
+}

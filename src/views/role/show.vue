@@ -4,6 +4,14 @@
       <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>基本信息</span>
+          <el-dropdown style="position: absolute;right: -9px;top: -6px"  @command="handleClick">
+            <el-button type="text">
+              <img src="../../assets/more.png" alt="" width="10" height="8">
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="编辑">编辑</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
         <div class="text item">
           <span class="text_label">角色名称：</span>
@@ -19,7 +27,16 @@
       <el-card class="box-card-large">
         <el-tabs v-model="activeName">
           <el-tab-pane label="权限设置" name="first">
-
+            <el-tree
+              :data="data"
+              show-checkbox
+              node-key="id"
+              :default-expand-all="true"
+              :default-checked-keys="[5]"
+              :props="defaultProps"
+              @check-change="handleCheckChange"
+            >
+            </el-tree>
           </el-tab-pane>
 
         </el-tabs>
@@ -27,6 +44,19 @@
     </el-col>
 
 
+    <i-edit
+      :dialog-visible="editProps.visible"
+      :edit-id="editId"
+      @on-dialog-close="handleClose"
+    ></i-edit>
+    <!--      <el-dialog-->
+    <!--        title="查看图片"-->
+    <!--        :visible.sync="imgVisible"-->
+    <!--        :modal-append-to-body='false'-->
+    <!--        width="50%"-->
+    <!--        :before-close="handleClose">-->
+    <!--        <img :src="'https://www.gunghobox.com/images/'+manager.avatar" alt="" width="100%">-->
+    <!--      </el-dialog>-->
   </div>
 </template>
 
@@ -37,6 +67,9 @@
 
   export default {
     name: "show",
+    components: {
+      IEdit, previewImg
+    },
     data() {
       return {
         role: {},

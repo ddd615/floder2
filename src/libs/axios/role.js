@@ -7,6 +7,7 @@ let deleteUrl = `api/${model}/delete`;
 let batchDeleteUrl = `api/${model}/delete`;
 let enableUrl = `api/${model}/enable`;
 let disableUrl = `api/${model}/disable`;
+let saveUrl = `api/${model}/save`
 
 export function get(param, callback) {
   axios.post(getUrl, param).then(data => {
@@ -55,6 +56,15 @@ export function enable(param, callback) {
 
 export function disable(param, callback) {
   axios.post(disableUrl, param).then(data => {
+    if (data !== undefined && data !== '' && data !== null) {
+      // callback when data is exist
+      callback(data)
+    }
+  })
+}
+
+export function save(param, callback) {
+  axios.post(saveUrl, param).then(data => {
     if (data !== undefined && data !== '' && data !== null) {
       // callback when data is exist
       callback(data)

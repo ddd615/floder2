@@ -72,46 +72,27 @@
         </el-table-column>
         <el-table-column
           prop="id"
-          label="User ID"
+          label="角色ID"
         >
         </el-table-column>
         <el-table-column
-          prop="nickname"
-          label="昵称"
+          prop="name"
+          label="角色"
         >
         </el-table-column>
         <el-table-column
-          prop="phone"
-          label="手机号"
+          prop="comment"
+          label="备注"
         >
-        </el-table-column>
-        <el-table-column
-          prop="createAt"
-          label="创建时间"
-          sortable
-        >
-        </el-table-column>
-        <el-table-column
-          prop="status"
-          label="状态"
-        >
-        </el-table-column>
-        <el-table-column
-          fixed="right"
-          align="center"
-          label="操作"
-          width="200">
-          <template slot-scope="scope">
-            <el-button @click.stop="handleStatusChange(scope.row)" type="text" size="small">{{scope.row.status.indexOf('启用') >= 0 ? '禁用' : '启用'}}</el-button>
-          </template>
         </el-table-column>
       </el-table>
     </el-col>
-<!--    &lt;!&ndash;    新建&ndash;&gt;-->
-<!--    <i-create-->
-<!--      :dialog-visible="createProps.visible"-->
-<!--      @on-dialog-close="handleClose"-->
-<!--    />-->
+    <!--    新建-->
+    <i-create
+      :dialog-visible="createProps.visible"
+      @on-dialog-close="handleClose"
+      @on-save-success="handleSave"
+    />
 
 <!--    &lt;!&ndash;    编辑&ndash;&gt;-->
 <!--    <i-edit-->
@@ -129,13 +110,13 @@
   // import IEdit from "./edit"
   import {post} from "@/libs/http/request";
   import Emitter from '@/mixins/emitter'
-  import {search, count, del, enable, disable} from '@/libs/axios/user'
+  import {search, count, del, enable, disable} from '@/libs/axios/role'
 
   export default {
     mixins: [Emitter],
     data() {
       return {
-        model: "user",
+        model: "role",
         createProps: {
           visible: false
         },
@@ -155,21 +136,9 @@
         extraParam: {},
         searchItems: [
           {
-            name: "手机号",
-            key: "phone",
+            name: "角色名称",
+            key: "name",
             type: "string"
-          },
-          {
-            name: "最近登录时间",
-            key: "accessAt",
-            type: "daterange",
-          },
-          {
-            name: "状态",
-            key: "status",
-            type: "select",
-            displayValue: ["禁用", "启用"],
-            value: ["禁用", "启用"]
           }
         ]
       };
@@ -180,7 +149,7 @@
       }
     },
     components: {
-      Search, ICreate
+      Search,ICreate
     },
     methods: {
       handleEdit() {
@@ -407,11 +376,15 @@
         this.createProps.visible = false;
         this.editProps.visible = false;
       },
+      handleSave() {
+        this.createProps.visible = false;
+        this.search(this.page);
+      },
       handleSelectionChange(val) {
         this.selectList = val;
       },
       handleRowClick(row) {
-        this.$router.push({path: `/${this.model}/show/` + row.id})
+        this.$router.push({path: `/${this.model}/show/`+ row.id})
       },
       handleCurrentChange(val) {
         this.page = val;

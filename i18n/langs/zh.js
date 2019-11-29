@@ -9,7 +9,9 @@ const zh = {
     'manager':'管理员管理',
     'system':'系统管理',
     'message':'消息管理',
-    'user':'用户管理'
+    'user':'用户管理',
+    'role':'角色管理',
+    'advice':'互动管理'
   },
   // ...zhLocale
 }

@@ -81,11 +81,6 @@
           >
         </el-table-column>
         <el-table-column
-          prop="role"
-          label="角色"
-        >
-        </el-table-column>
-        <el-table-column
           prop="phone"
           label="手机号"
         >

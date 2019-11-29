@@ -13,38 +13,6 @@
       <div style="width: 95%;margin: 10px auto;">
         <el-button style="background: rgb(0, 161, 108);border: none" icon="el-icon-plus"  type="primary" @click="toCreate">新建</el-button>
         <el-button icon="el-icon-delete" @click="batchDelete">删除</el-button>
-        <el-dropdown :trigger="'click'" @command="handleClick" size="medium" @visible-change="onMenuChange">
-          <el-button icon="el-icon-menu" style="background:#3e5265;color: white ">更多操作<i :class="menu.visible?'el-icon-caret-top':'el-icon-caret-bottom'"></i></el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item
-              icon="el-icon-circle-check"
-              command="启用"
-              :disabled="selectList.findIndex(s=>{return s.status === '启用'}) >=0 || selectList.length === 0"
-              :style="(selectList.findIndex(s=>{return s.status === '启用'}) >=0 || selectList.length === 0)?{'color':'rgba(255,255,255,0.4)','cursor': 'not-allowed'}:{'color':'#fff'}"
-              @click="batchEnable"
-            >
-              启用
-            </el-dropdown-item>
-            <el-dropdown-item
-              icon="el-icon-circle-close"
-              command="禁用"
-              :disabled="selectList.findIndex(s=>{return s.status === '禁用'}) >=0 || selectList.length === 0"
-              :style="(selectList.findIndex(s=>{return s.status === '禁用'}) >=0 || selectList.length === 0)?{'color':'rgba(255,255,255,0.4)'}:{'color':'#fff'}"
-              @click.stop="batchDisable"
-            >
-              禁用
-            </el-dropdown-item>
-            <el-dropdown-item
-              icon="el-icon-edit"
-              command="编辑"
-              :disabled="selectList.length !== 1"
-              :style="(selectList.length !== 1)?{'color':'rgba(255,255,255,0.4)'}:{'color':'#fff'}"
-              @click.stop="handleEdit"
-            >
-              编辑
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
         <div class="pager-group">
           <el-pagination
             @size-change="handleSizeChange"
@@ -127,7 +95,7 @@
     mixins: [Emitter],
     data() {
       return {
-        model: "manager",
+        model: "message",
         createProps: {
           visible: false
         },
@@ -147,28 +115,22 @@
         extraParam: {},
         searchItems: [
           {
-            name: "账号",
-            key: "username",
+            name: "标题",
+            key: "title",
             type: "string"
           },
+
           {
-            name: "姓名",
-            key: "realname",
-            type: "string"
+            name: "推送方式",
+            key: "type",
+            type: "select",
+            displayValue: ['APP内消息中心推送','通知栏推送'],
+            value: ['APP内消息中心推送','通知栏推送']
           },
           {
-            name: "角色",
-            key: "",
-            type: "select",
-            displayValue: [],
-            value: []
-          },
-          {
-            name: "状态",
-            key: "status",
-            type: "select",
-            displayValue: ["禁用", "启用"],
-            value: ["禁用", "启用"]
+            name: "推送时间",
+            key: "createAt",
+            type: "datarange"
           }
         ]
       };

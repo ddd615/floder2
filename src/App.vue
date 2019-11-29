@@ -21,6 +21,7 @@
   @import "./style/layoutLeft.less";
   @import "./style/button.less";
   @import "./style/card.less";
+  @import "./style/form";
   *{
     margin: 0;
     padding: 0;

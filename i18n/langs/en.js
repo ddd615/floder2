@@ -8,7 +8,9 @@ const en = {
     'index' : 'Index',
     'manager': 'Admin Management',
     'system': 'System Management',
-    'message': 'Message Management'
+    'message': 'Message Management',
+    'role': 'Role Management',
+    'advice': 'Advice Management'
   },
 
   // ...enLocale
