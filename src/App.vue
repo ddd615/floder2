@@ -22,6 +22,8 @@
   @import "./style/button.less";
   @import "./style/card.less";
   @import "./style/form";
+  @import "./style/tabs";
+  @import "./style/step";
   *{
     margin: 0;
     padding: 0;
@@ -42,6 +44,11 @@
   .el-input__inner{
     height: 35px;
     line-height: 35px;
+  }
+  .rich_text{
+    img{
+      max-width: 100%;
+    }
   }
   /*表格行高*/
 

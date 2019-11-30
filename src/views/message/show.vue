@@ -6,19 +6,35 @@
           <span>基本信息</span>
         </div>
         <div class="text item">
-          <span class="text_label">角色名称：</span>
-          {{role.name}}
+          <span class="text_label">推送方式：</span>
+          {{message.type}}
         </div>
         <div class="text item">
-          <span class="text_label">备注：</span>
-          {{role.comment}}
+          <span class="text_label">推送方式：</span>
+          {{message.scope}}
+        </div>
+        <div class="text item">
+          <span class="text_label">消息标题：</span>
+          {{message.title}}
+        </div>
+        <div class="text item">
+          <span class="text_label">推送时间：</span>
+          {{message.createAt}}
+        </div>
+        <div class="text item">
+          <span class="text_label">图文内容：</span>
+          <div v-html="message.content" class="rich_text">
+          </div>
         </div>
       </el-card>
     </el-col>
     <el-col :span="18">
       <el-card class="box-card-large">
         <el-tabs v-model="activeName">
-          <el-tab-pane label="权限设置" name="first">
+          <el-tab-pane label="未推送" name="first">
+
+          </el-tab-pane>
+          <el-tab-pane label="已推送" name="second">
 
           </el-tab-pane>
 
@@ -31,15 +47,13 @@
 </template>
 
 <script>
-  import {get, enable, disable} from '@/libs/axios/role'
-  import previewImg from '@/components/previewImg/previewImg.vue'
-  import IEdit from './edit'
+  import {get} from '@/libs/axios/message'
 
   export default {
     name: "show",
     data() {
       return {
-        role: {},
+        message: {},
         editProps: {
           visible: false
         },
@@ -105,7 +119,7 @@
     methods: {
       get() {
         get({id: this.id}, res => {
-          this.role = res;
+          this.message = res;
         });
       },
       handleClose() {

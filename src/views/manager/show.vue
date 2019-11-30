@@ -209,8 +209,11 @@
         let param = {
           pageable: {
             page: this.page,
-            pageSize: this.pageSize,
+            size: this.pageSize,
             sort: this.sort
+          },
+          role:{
+
           }
         };
 
@@ -221,7 +224,7 @@
 
       },
       roleCount() {
-        count({}, res => {
+        count({role:{}}, res => {
           this.total = res;
         })
       },

@@ -1,91 +1,272 @@
 <template>
-  <el-row class="page">
-    <!--    搜索-->
-    <el-col :span="24">
-      <search
-        style="width: 95%;margin: 10px auto"
-        :search-items="searchItems"
-        @on-search="searchBySearchItem"
-      ></search>
+
+  <el-row>
+    <el-col  style="margin:10px 1%;width: 98%;">
+      <el-tabs type="border-card" @tab-click="handleTabClick">
+        <el-tab-pane label="短信推送">
+          <el-row class="page">
+            <!--    搜索-->
+            <el-col :span="24">
+              <search
+                style="width: 95%;margin: 10px auto"
+                :search-items="searchItems"
+                @on-search="searchBySearchItem"
+              ></search>
+            </el-col>
+            <!--    按钮和分页-->
+            <el-col :span="24">
+              <div style="width: 95%;margin: 10px auto;">
+                <el-button style="background: rgb(0, 161, 108);border: none" icon="el-icon-plus"  type="primary" @click="toCreate">新建</el-button>
+                <el-button icon="el-icon-delete" @click="batchDelete">删除</el-button>
+                <div class="pager-group">
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="page"
+                    :page-sizes="[10, 20, 30, 40]"
+                    :page-size="pageSize"
+                    layout="total, sizes, jumper, prev, next"
+                    :total="total">
+                  </el-pagination>
+                </div>
+              </div>
+            </el-col>
+            <!--    表格-->
+            <el-col :span="24">
+              <el-table
+                :data="data"
+                style="width: 95%;margin:0 auto;"
+                @selection-change="handleSelectionChange"
+                @row-dblclick="handleRowClick"
+              >
+                <el-table-column
+                  type="selection"
+                  width="55">
+                </el-table-column>
+                <el-table-column
+                  prop="id"
+                  label="消息ID"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="title"
+                  label="消息标题"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="scope"
+                  label="推送对象"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="type"
+                  label="推送方式"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="createAt"
+                  label="创建时间"
+                  sortable
+                >
+                </el-table-column>
+
+              </el-table>
+            </el-col>
+            <!--    新建-->
+            <i-create
+              :dialog-visible="createProps.visible"
+              @on-dialog-close="handleClose"
+            />
+
+            <!--    &lt;!&ndash;    编辑&ndash;&gt;-->
+            <!--    <i-edit-->
+            <!--      :dialog-visible="editProps.visible"-->
+            <!--      :edit-id="editId"-->
+            <!--      @on-dialog-close="handleClose"-->
+            <!--    />-->
+
+
+          </el-row>
+        </el-tab-pane>
+        <el-tab-pane label="APP内消息中心推送">
+          <el-row class="page">
+            <!--    搜索-->
+            <el-col :span="24">
+              <search
+                style="width: 95%;margin: 10px auto"
+                :search-items="searchItems"
+                @on-search="searchBySearchItem"
+              ></search>
+            </el-col>
+            <!--    按钮和分页-->
+            <el-col :span="24">
+              <div style="width: 95%;margin: 10px auto;">
+                <el-button style="background: rgb(0, 161, 108);border: none" icon="el-icon-plus"  type="primary" @click="toCreate">新建</el-button>
+                <el-button icon="el-icon-delete" @click="batchDelete">删除</el-button>
+                <div class="pager-group">
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="page"
+                    :page-sizes="[10, 20, 30, 40]"
+                    :page-size="pageSize"
+                    layout="total, sizes, jumper, prev, next"
+                    :total="total">
+                  </el-pagination>
+                </div>
+              </div>
+            </el-col>
+            <!--    表格-->
+            <el-col :span="24">
+              <el-table
+                :data="data"
+                style="width: 95%;margin:0 auto;"
+                @selection-change="handleSelectionChange"
+                @row-dblclick="handleRowClick"
+              >
+                <el-table-column
+                  type="selection"
+                  width="55">
+                </el-table-column>
+                <el-table-column
+                  prop="id"
+                  label="消息ID"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="title"
+                  label="消息标题"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="scope"
+                  label="推送对象"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="type"
+                  label="推送方式"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="createAt"
+                  label="创建时间"
+                  sortable
+                >
+                </el-table-column>
+
+              </el-table>
+            </el-col>
+            <!--    新建-->
+            <i-create
+              :messageType="messageType"
+              :dialog-visible="createProps.visible"
+              @on-dialog-close="handleClose"
+            />
+
+            <!--    &lt;!&ndash;    编辑&ndash;&gt;-->
+            <!--    <i-edit-->
+            <!--      :dialog-visible="editProps.visible"-->
+            <!--      :edit-id="editId"-->
+            <!--      @on-dialog-close="handleClose"-->
+            <!--    />-->
+
+
+          </el-row>
+        </el-tab-pane>
+        <el-tab-pane label="通知栏推送">
+          <el-row class="page">
+            <!--    搜索-->
+            <el-col :span="24">
+              <search
+                style="width: 95%;margin: 10px auto"
+                :search-items="searchItems"
+                @on-search="searchBySearchItem"
+              ></search>
+            </el-col>
+            <!--    按钮和分页-->
+            <el-col :span="24">
+              <div style="width: 95%;margin: 10px auto;">
+                <el-button style="background: rgb(0, 161, 108);border: none" icon="el-icon-plus"  type="primary" @click="toCreate">新建</el-button>
+                <el-button icon="el-icon-delete" @click="batchDelete">删除</el-button>
+                <div class="pager-group">
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="page"
+                    :page-sizes="[10, 20, 30, 40]"
+                    :page-size="pageSize"
+                    layout="total, sizes, jumper, prev, next"
+                    :total="total">
+                  </el-pagination>
+                </div>
+              </div>
+            </el-col>
+            <!--    表格-->
+            <el-col :span="24">
+              <el-table
+                :data="data"
+                style="width: 95%;margin:0 auto;"
+                @selection-change="handleSelectionChange"
+                @row-dblclick="handleRowClick"
+              >
+                <el-table-column
+                  type="selection"
+                  width="55">
+                </el-table-column>
+                <el-table-column
+                  prop="id"
+                  label="消息ID"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="title"
+                  label="消息标题"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="scope"
+                  label="推送对象"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="type"
+                  label="推送方式"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="createAt"
+                  label="创建时间"
+                  sortable
+                >
+                </el-table-column>
+
+              </el-table>
+            </el-col>
+            <!--    新建-->
+            <i-create
+              :dialog-visible="createProps.visible"
+              @on-dialog-close="handleClose"
+            />
+
+            <!--    &lt;!&ndash;    编辑&ndash;&gt;-->
+            <!--    <i-edit-->
+            <!--      :dialog-visible="editProps.visible"-->
+            <!--      :edit-id="editId"-->
+            <!--      @on-dialog-close="handleClose"-->
+            <!--    />-->
+
+
+          </el-row>
+        </el-tab-pane>
+      </el-tabs>
     </el-col>
-    <!--    按钮和分页-->
-    <el-col :span="24">
-      <div style="width: 95%;margin: 10px auto;">
-        <el-button style="background: rgb(0, 161, 108);border: none" icon="el-icon-plus"  type="primary" @click="toCreate">新建</el-button>
-        <el-button icon="el-icon-delete" @click="batchDelete">删除</el-button>
-        <div class="pager-group">
-          <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="page"
-            :page-sizes="[10, 20, 30, 40]"
-            :page-size="pageSize"
-            layout="total, sizes, jumper, prev, next"
-            :total="total">
-          </el-pagination>
-        </div>
-      </div>
-    </el-col>
-    <!--    表格-->
-    <el-col :span="24">
-      <el-table
-        :data="data"
-        style="width: 95%;margin:0 auto;"
-        @selection-change="handleSelectionChange"
-        @row-dblclick="handleRowClick"
-      >
-        <el-table-column
-          type="selection"
-          width="55">
-        </el-table-column>
-        <el-table-column
-          prop="id"
-          label="消息ID"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="title"
-          label="消息标题"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="scope"
-          label="推送对象"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="type"
-          label="推送方式"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="createAt"
-          label="创建时间"
-          sortable
-        >
-        </el-table-column>
-
-      </el-table>
-    </el-col>
-<!--    &lt;!&ndash;    新建&ndash;&gt;-->
-<!--    <i-create-->
-<!--      :dialog-visible="createProps.visible"-->
-<!--      @on-dialog-close="handleClose"-->
-<!--    />-->
-
-<!--    &lt;!&ndash;    编辑&ndash;&gt;-->
-<!--    <i-edit-->
-<!--      :dialog-visible="editProps.visible"-->
-<!--      :edit-id="editId"-->
-<!--      @on-dialog-close="handleClose"-->
-<!--    />-->
-
-
   </el-row>
+
 </template>
 <script>
   import Search from "@/components/search";
-  // import ICreate from "./create"
+  import ICreate from "./create"
   // import IEdit from "./edit"
   import {post} from "@/libs/http/request";
   import Emitter from '@/mixins/emitter'
@@ -113,24 +294,17 @@
         page: 1,
         total: 0,
         extraParam: {},
+        messageType:'短信推送',
         searchItems: [
           {
             name: "标题",
             key: "title",
             type: "string"
           },
-
-          {
-            name: "推送方式",
-            key: "type",
-            type: "select",
-            displayValue: ['APP内消息中心推送','通知栏推送'],
-            value: ['APP内消息中心推送','通知栏推送']
-          },
           {
             name: "推送时间",
             key: "createAt",
-            type: "datarange"
+            type: "daterange"
           }
         ]
       };
@@ -141,7 +315,7 @@
       }
     },
     components: {
-      Search,
+      Search,ICreate
     },
     methods: {
       handleEdit() {
@@ -237,6 +411,9 @@
       search(page) {
         let _t = this;
         _t.page = page;
+        _t.extraParam = {
+          type:this.messageType
+        };
         let param = {
           pageable: {
             page: page,
@@ -372,7 +549,7 @@
         this.selectList = val;
       },
       handleRowClick(row) {
-        this.$router.push({path: '/manager/show/' + row.id})
+        this.$router.push({path: '/message/show/' + row.id})
       },
       handleCurrentChange(val) {
         this.page = val;
@@ -402,6 +579,10 @@
             this.batchDisable();
             break;
         }
+      },
+      handleTabClick(val){
+        this.messageType = val.label;
+        this.search(this.page);
       }
     },
     mounted() {

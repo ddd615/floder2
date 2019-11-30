@@ -1,5 +1,4 @@
 import axios from './axios'
-import CODE from './statusCode'
 
 export function post(url, param, callback) {
     axios.post(url, param).then(data => {

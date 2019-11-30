@@ -469,9 +469,4 @@
     border: 1px solid#00a16c;
     background: white;
   }
-  .footor{
-    margin:10px 30px;
-    width: 90%;
-    text-align: right;
-  }
 </style>
