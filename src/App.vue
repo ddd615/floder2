@@ -24,11 +24,7 @@
   @import "./framework/style/form";
   @import "./framework/style/tabs";
   @import "./framework/style/step";
-  *{
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto','PingFang SC','Noto Sans CJK','WenQuanYi Micro Hei','Microsoft YaHei';
-  }
+  @import "./project/style/style";
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -36,52 +32,4 @@
   color: #2c3e50;
 
 }
-
-
-  .el-input{
-    width: 200px;
-  }
-  .el-input__inner{
-    height: 35px;
-    line-height: 35px;
-  }
-  .rich_text{
-    img{
-      max-width: 100%;
-    }
-  }
-  /*表格行高*/
-
-  /*.el-dialog{*/
-  /*  .el-dialog__header{*/
-  /*    background: #2c3e50;*/
-  /*  }*/
-  /*}*/
-  /*.footor {*/
-  /*  width: 100%;*/
-  /*  height: 44px;*/
-  /*  padding: 5px;*/
-  /*  .pager-group {*/
-  /*    float: right;*/
-  /*    margin-right: 10px;*/
-  /*    .pager-data {*/
-  /*      display: inline-block;*/
-  /*      margin-top: 5px;*/
-  /*      margin-left: 20px;*/
-  /*      margin-right: 20px;*/
-  /*      .val {*/
-  /*        color: red;*/
-  /*      }*/
-  /*    }*/
-  /*    .pager {*/
-  /*      display: inline-block;*/
-  /*      vertical-align: middle;*/
-  /*    }*/
-  /*  }*/
-  /*}*/
-  .footor{
-    margin:10px 30px;
-    width: 90%;
-    text-align: right;
-  }
 </style>
