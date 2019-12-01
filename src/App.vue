@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import Layout from '@/layout'
+  import Layout from '@/framework/layout'
 
   export default {
     name: 'App',
@@ -16,14 +16,14 @@
 </script>
 
 <style lang="less">
-  @import "./style/dialog.less";
-  @import "./style/table.less";
-  @import "./style/layoutLeft.less";
-  @import "./style/button.less";
-  @import "./style/card.less";
-  @import "./style/form";
-  @import "./style/tabs";
-  @import "./style/step";
+  @import "./framework/style/dialog.less";
+  @import "./framework/style/table.less";
+  @import "./framework/style/layoutLeft.less";
+  @import "./framework/style/button.less";
+  @import "./framework/style/card.less";
+  @import "./framework/style/form";
+  @import "./framework/style/tabs";
+  @import "./framework/style/step";
   *{
     margin: 0;
     padding: 0;

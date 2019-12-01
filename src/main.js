@@ -2,13 +2,13 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
-import store from './store'
+import router from './project/router'
+import store from './framework/store'
 import ElementUI from 'element-ui';
-import { post } from '@/libs/http/request'
+import { post } from '@/project/libs/http/request'
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en'
-import i18n from '../i18n/i18n.js' //引入i8n配置
+import i18n from './project/i18n/i18n.js' //引入i8n配置
 
 
 Vue.config.productionTip = false
