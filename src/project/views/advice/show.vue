@@ -55,7 +55,7 @@
 </template>
 
 <script>
-  import {get, enable, disable, findById} from '@/project/libs/axios/advice'
+  import {get, enable, disable, findById} from '@/project/service/advice'
 
 
   export default {

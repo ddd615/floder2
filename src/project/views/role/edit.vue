@@ -25,7 +25,7 @@
 
 <script>
   import Upload from "@/framework/components/upload";
-  import { get } from '@/project/libs/axios/role'
+  import { get } from '@/project/service/role'
   export default {
     name: "edit",
     components:{

@@ -127,9 +127,9 @@
   import Search from "@/framework/components/search";
   import ICreate from "./create"
   // import IEdit from "./edit"
-  import {post} from "@/project/libs/http/request";
+  import {post} from "@/framework/http/request";
   import Emitter from '@/framework/mixins/emitter'
-  import {search, count, del, enable, disable} from '@/project/libs/axios/user'
+  import {search, count, del, enable, disable} from '@/project/service/user'
 
   export default {
     mixins: [Emitter],

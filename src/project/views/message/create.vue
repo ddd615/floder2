@@ -102,8 +102,8 @@
   import Editor from "@/framework/components/editor"
   import Upload from "@/framework/components/upload";
   import Search from "@/framework/components/search";
-  import { save } from '@/project/libs/axios/role';
-  import { search,count } from "@/project/libs/axios/user"
+  import { save } from '@/project/service/role';
+  import { search,count } from "@/project/service/user"
   export default {
     name: "dialog",
     components:{

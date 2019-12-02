@@ -5,7 +5,7 @@ import App from './App'
 import router from './project/router'
 import store from './framework/store'
 import ElementUI from 'element-ui';
-import { post } from '@/project/libs/http/request'
+import { post } from '@/framework/http/request'
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en'
 import i18n from './project/i18n/i18n.js' //引入i8n配置

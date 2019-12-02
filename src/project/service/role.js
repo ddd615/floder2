@@ -1,4 +1,4 @@
-import axios from '../http/axios'
+import axios from '@/framework/http/axios'
 const model = 'role';
 let getUrl = `api/${model}/get`;
 let searchUrl = `api/${model}/search`;

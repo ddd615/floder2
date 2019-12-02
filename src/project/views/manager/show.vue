@@ -136,8 +136,8 @@
 </template>
 
 <script>
-  import {get, enable, disable} from '@/project/libs/axios/manager'
-  import {search, count} from '@/project/libs/axios/role'
+  import {get, enable, disable} from '@/project/service/manager'
+  import {search, count} from '@/project/service/role'
   import previewImg from '@/framework/components/previewImg/previewImg.vue'
   import IEdit from './edit'
 

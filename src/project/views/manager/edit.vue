@@ -41,7 +41,7 @@
 
 <script>
   import Upload from "@/framework/components/upload";
-  import { get } from '@/project/libs/axios/manager'
+  import { get } from '@/project/service/manager'
   export default {
     name: "edit",
     components:{

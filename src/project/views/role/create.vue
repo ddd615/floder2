@@ -26,7 +26,7 @@
 
 <script>
   import Upload from "@/framework/components/upload";
-  import { save } from '@/project/libs/axios/role'
+  import { save } from '@/project/service/role'
   export default {
     name: "dialog",
     components:{

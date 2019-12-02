@@ -47,7 +47,7 @@
 </template>
 
 <script>
-  import {get} from '@/project/libs/axios/message'
+  import {get} from '@/project/service/message'
 
   export default {
     name: "show",

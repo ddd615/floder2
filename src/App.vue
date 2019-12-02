@@ -24,7 +24,7 @@
   @import "./framework/style/form";
   @import "./framework/style/tabs";
   @import "./framework/style/step";
-  @import "./project/style/style";
+  @import "./project/styles/style";
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

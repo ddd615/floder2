@@ -74,7 +74,7 @@
 </template>
 
 <script>
-  import {get, enable, disable, findById} from '@/project/libs/axios/user'
+  import {get, enable, disable, findById} from '@/project/service/user'
 
 
   export default {

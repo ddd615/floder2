@@ -27,7 +27,7 @@
 <script>
   const md5 = require('js-md5');
   const LOGIN_URL = "/api/manager/login";
-  import {post} from "@/project/libs/http/request"
+  import {post} from "@/framework/http/request"
   export default {
     name: "Login",
     data() {
