@@ -1,11 +1,11 @@
 
 
 
-const user = {
+const advice = {
   routes: [
     {
-      path:'/user/list',
-      name:'userList',
+      path:'/advice/list',
+      name:'adviceList',
       meta:{
         isShowHeader:true,
         isShowLeftSider:true,
@@ -16,16 +16,16 @@ const user = {
             path:'/index'
           },
           {
-            name:'message.user',
-            path:'/user/list'
+            name:'message.advice',
+            path:'/advice/list'
           }
         ]
       },
-      component: () => import('@/project/views/user/list')
+      component: () => import('@/project/views/advice/list')
     },
     {
-      path:'/user/show/:id',
-      name:'userShow',
+      path:'/advice/show/:id',
+      name:'adviceShow',
       meta:{
         isShowHeader:true,
         isShowLeftSider:true,
@@ -35,18 +35,18 @@ const user = {
             path:'/index'
           },
           {
-            name:'用户列表',
-            path:'/user/list'
+            name:'意见反馈',
+            path:'/advice/list'
           },
           {
-            name:'用户详情',
-            path:'/user/show/:id'
+            name:'意见反馈详情',
+            path:'/advice/show/:id'
           }
         ]
       },
-      component: () => import('@/project/views/user/show')
-    }
+      component: () => import('@/project/views/advice/show')
+    },
 
   ]
 }
-export default user;
+export default advice;

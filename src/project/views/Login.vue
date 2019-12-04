@@ -2,7 +2,7 @@
   <div class="page">
     <el-row>
       <el-col style="text-align: center;margin-top: 100px;" :xs="{ span: 12, offset: 8 }" :lg="{ span: 8, offset: 8 }">
-        <h1 class="logo-text" >{{$t('message.projectName')}}</h1>
+        <h1 class="logo-text" ></h1>
       </el-col>
       <el-col style="margin-top: 50px;"  :xs="{ span: 12, offset: 8 }" :lg="{ span: 6, offset: 9 }">
         <el-form ref="formValidate"   :model="formValidate" :rules="ruleValidate" >

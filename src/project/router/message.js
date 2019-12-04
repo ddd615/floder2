@@ -1,11 +1,11 @@
 
 
 
-const user = {
+const message = {
   routes: [
     {
-      path:'/user/list',
-      name:'userList',
+      path:'/message/list',
+      name:'messageList',
       meta:{
         isShowHeader:true,
         isShowLeftSider:true,
@@ -16,16 +16,16 @@ const user = {
             path:'/index'
           },
           {
-            name:'message.user',
-            path:'/user/list'
+            name:'message.message',
+            path:'/message/list'
           }
         ]
       },
-      component: () => import('@/project/views/user/list')
+      component: () => import('@/project/views/message/list')
     },
     {
-      path:'/user/show/:id',
-      name:'userShow',
+      path:'/message/show/:id',
+      name:'messageShow',
       meta:{
         isShowHeader:true,
         isShowLeftSider:true,
@@ -35,18 +35,17 @@ const user = {
             path:'/index'
           },
           {
-            name:'用户列表',
-            path:'/user/list'
+            name:'消息管理',
+            path:'/message/list'
           },
           {
-            name:'用户详情',
-            path:'/user/show/:id'
+            name:'消息详情',
+            path:'/message/show/:id'
           }
         ]
       },
-      component: () => import('@/project/views/user/show')
-    }
-
+      component: () => import('@/project/views/message/show')
+    },
   ]
 }
-export default user;
+export default message;

@@ -1,11 +1,11 @@
 
 
 
-const user = {
+const role = {
   routes: [
     {
-      path:'/user/list',
-      name:'userList',
+      path:'/role/list',
+      name:'roleList',
       meta:{
         isShowHeader:true,
         isShowLeftSider:true,
@@ -16,16 +16,16 @@ const user = {
             path:'/index'
           },
           {
-            name:'message.user',
-            path:'/user/list'
+            name:'message.role',
+            path:'/role/list'
           }
         ]
       },
-      component: () => import('@/project/views/user/list')
+      component: () => import('@/project/views/role/list')
     },
     {
-      path:'/user/show/:id',
-      name:'userShow',
+      path:'/role/show/:id',
+      name:'roleShow',
       meta:{
         isShowHeader:true,
         isShowLeftSider:true,
@@ -35,18 +35,18 @@ const user = {
             path:'/index'
           },
           {
-            name:'用户列表',
-            path:'/user/list'
+            name:'角色列表',
+            path:'/role/list'
           },
           {
-            name:'用户详情',
-            path:'/user/show/:id'
+            name:'角色详情',
+            path:'/role/show/:id'
           }
         ]
       },
-      component: () => import('@/project/views/user/show')
-    }
+      component: () => import('@/project/views/role/show')
+    },
 
   ]
 }
-export default user;
+export default role;
