@@ -34,8 +34,8 @@
       return {
         projectName: "lychee后台管理系统",
         formValidate: {
-          username: "admin",
-          password: "123456"
+          username: "account_3",
+          password: "112233"
         },
         ruleValidate: {
           username: [

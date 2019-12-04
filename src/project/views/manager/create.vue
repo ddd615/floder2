@@ -47,8 +47,10 @@
 
 <script>
   import Upload from "@/framework/components/upload";
+  import emitter from '@/framework/mixins/emitter'
   export default {
     name: "dialog",
+    mixins:[emitter],
     components:{
       Upload
     },
@@ -152,10 +154,10 @@
         this.$emit('on-dialog-close');
       },
       handleConfirm(){
-
+        this.broadcast('SiUpload','on-form-submit',() => {})
       },
-      handleTransportFileList(){
-
+      handleTransportFileList(fileList){
+        console.log(fileList);
       }
     }
   }

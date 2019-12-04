@@ -28,11 +28,10 @@
         <el-tabs v-model="activeName">
           <el-tab-pane label="权限设置" name="first">
             <el-tree
-              :data="data"
+              :data="moduleList"
               show-checkbox
               node-key="id"
               :default-expand-all="true"
-              :default-checked-keys="[5]"
               :props="defaultProps"
               @check-change="handleCheckChange"
             >
@@ -64,7 +63,7 @@
   import {get, enable, disable} from '@/project/service/role'
   import previewImg from '@/framework/components/previewImg/previewImg.vue'
   import IEdit from './edit'
-
+  import { post } from '@/framework/http/request'
   export default {
     name: "show",
     components: {
@@ -90,41 +89,7 @@
           pass: '',
           checkPass: '',
         },
-        data: [{
-          id: 1,
-          label: '一级 1',
-          children: [{
-            id: 4,
-            label: '二级 1-1',
-            children: [{
-              id: 9,
-              label: '三级 1-1-1'
-            }, {
-              id: 10,
-              label: '三级 1-1-2'
-            }]
-          }]
-        }, {
-          id: 2,
-          label: '一级 2',
-          children: [{
-            id: 5,
-            label: '二级 2-1'
-          }, {
-            id: 6,
-            label: '二级 2-2'
-          }]
-        }, {
-          id: 3,
-          label: '一级 3',
-          children: [{
-            id: 7,
-            label: '二级 3-1'
-          }, {
-            id: 8,
-            label: '二级 3-2'
-          }]
-        }],
+        moduleList: [],
         defaultProps: {
           children: 'children',
           label: 'label'
@@ -134,6 +99,7 @@
     created() {
       this.get();
       // this.roleSearch();
+      this.getMenu();
     },
     methods: {
       get() {
@@ -154,7 +120,27 @@
             this.editProps.visible = true;
             break;
         }
-      }
+      },
+      getMenu(){
+        post("/api/menu/findAll", {}, res => {
+          let array = [];
+          res.map((item,index) => {
+            array.push({});
+            array[index].label = item.name;
+            array[index].children = [];
+            item.label = item.name;
+            item.moduleList.map(module => {
+              module.label = module.name;
+              array[index].children.push(module);
+            });
+            item.children = item.moduleList;
+          });
+          array.reverse();
+          console.log(array);
+          this.moduleList = array;
+        });
+      },
+
     }
   }
 </script>

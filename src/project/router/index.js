@@ -7,6 +7,7 @@ import role from './role'
 import manager from './manager'
 import advice from './advice'
 import message from './message'
+import version from './version'
 
 Vue.use(Router);
 Vue.use(ElementUI);
@@ -17,7 +18,8 @@ let routeList = [
   user.routes,
   role.routes,
   advice.routes,
-  message.routes
+  message.routes,
+  version.routes
 ];
 
 let routes = [];

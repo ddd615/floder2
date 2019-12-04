@@ -1,28 +1,48 @@
 <template>
-    <div class="upload" v-if="type === 'img'">
-      <el-upload
-        ref="upload"
-        action="api/attachment/upload"
-        list-type="picture-card"
-        :file-list="defaultList"
-        :limit="limit"
+   <div>
+     <div class="upload" v-if="type === 'img'">
+       <el-upload
+         ref="upload"
+         action="api/attachment/upload"
+         list-type="picture-card"
+         :file-list="defaultList"
+         :limit="limit"
+         :multiple="multiple"
+         :on-preview="handlePictureCardPreview"
+         :on-remove="handleRemove"
+         :on-success="handleSuccess"
+         :on-exceed="handleExceed"
+         :beforeUpload="onBeforeUpload"
+       >
+         <i class="el-icon-plus"></i>
+       </el-upload>
+       <el-dialog title="查看图片" :visible.sync="dialogVisible"  :modal-append-to-body='false'>
+         <img width="100%" :src="dialogImageUrl" alt="">
+       </el-dialog>
 
-        :on-preview="handlePictureCardPreview"
-        :on-remove="handleRemove"
-        :on-success="handleSuccess"
-        :on-exceed="handleExceed"
-        :beforeUpload="onBeforeUpload"
-      >
-        <i class="el-icon-plus"></i>
-      </el-upload>
-      <el-dialog :visible.sync="dialogVisible"  :modal-append-to-body='false'>
-        <img width="100%" :src="dialogImageUrl" alt="">
-      </el-dialog>
+     </div>
+     <div class="upload-file" v-if="type === 'file'">
+       <el-upload
+         class="upload-demo"
+         drag
+         :limit="limit"
+         action="api/attachment/upload"
+         :multiple="multiple"
+         :on-remove="handleRemove"
+         :on-success="handleSuccess"
+         :on-exceed="handleExceed"
+         :beforeUpload="onBeforeUpload"
+         >
+         <i class="el-icon-upload"></i>
+         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
 
-    </div>
+       </el-upload>
+     </div>
+   </div>
 </template>
 
 <script>
+
 export default {
   name: "SiUpload",
   props:{
@@ -50,6 +70,10 @@ export default {
     perfix: {
       type: String,
       default: 'https://www.gunghobox.com/images/'
+    },
+    multiple: {
+      type: Boolean,
+      default: false
     }
   },
   data(){
@@ -93,9 +117,6 @@ export default {
 
     },
     handleSuccess(res,file,fileList) {
-      console.log(res);
-      console.log(file);
-      console.log(fileList);
       this.defaultList.push(file);
       console.log(this.defaultList);
     },
@@ -107,7 +128,7 @@ export default {
       console.log(file,fileList);
       this.$notify({
         title: '警告',
-        message: `最多只能上传${this.limit}张图片`,
+        message: `最多只能上传${this.limit}个文件`,
         type: 'warning'
       });
     },
