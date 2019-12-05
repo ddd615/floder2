@@ -18,20 +18,19 @@
       <el-form-item label="姓名" prop="realname" >
         <el-input v-model="formValidate.realname" placeholder="输入姓名"></el-input>
       </el-form-item>
-      <el-form-item label="头像" prop="fileList" >
+      <el-form-item label="头像">
         <upload
           @on-transport-file-list="handleTransportFileList"
           :max-size="5120"
           :limit="3"
         >
-
         </upload>
       </el-form-item>
       <el-form-item label="手机号" prop="phone" >
         <el-input v-model="formValidate.phone"  placeholder="输入手机号"></el-input>
       </el-form-item>
-      <el-form-item label="邮箱" prop="mail" >
-        <el-input v-model="formValidate.mail" placeholder="输入邮箱"></el-input>
+      <el-form-item label="邮箱" prop="email" >
+        <el-input v-model="formValidate.email" placeholder="输入邮箱"></el-input>
       </el-form-item>
       <el-form-item label="备注" prop="comment" >
         <el-input v-model="formValidate.comment" placeholder="输入备注"></el-input>
@@ -48,6 +47,7 @@
 <script>
   import Upload from "@/framework/components/upload";
   import emitter from '@/framework/mixins/emitter'
+  import { save } from '@/project/service/manager'
   export default {
     name: "dialog",
     mixins:[emitter],
@@ -90,60 +90,51 @@
       };
       return{
         formValidate:{
-          status:'',
+          status:'启用',
           username:'',
           password:'',
-          confirmPassword:'',
           realname:'',
           phone:'',
-          role:'',
-          mail:'',
+          email:'',
           comment:''
         },
-        // ruleValidate: {
-        //   username: [
-        //     {
-        //       required: true,
-        //       message: "账号不能为空",
-        //       trigger: "blur"
-        //     }
-        //   ],
-        //   password: [
-        //     { required: true, validator: validatePass, trigger: "blur" }
-        //   ],
-        //   confirmPassword: [
-        //     { required: true, validator: validatePassCheck, trigger: "blur" }
-        //   ],
-        //   realname: [
-        //     {
-        //       required: true,
-        //       message: "姓名不能为空",
-        //       trigger: "blur"
-        //     }
-        //   ],
-        //   phone: [
-        //     {
-        //       required: true,
-        //       message: "手机号不能为空",
-        //       trigger: "blur"
-        //     }
-        //   ],
-        //   mail: [
-        //     {
-        //       required: true,
-        //       message: "邮箱不能为空",
-        //       trigger: "blur"
-        //     },
-        //     { type: "email", message: "邮箱格式不对", trigger: "blur" }
-        //   ],
-        //   status: [
-        //     { required: true, message: "请选择启用状态", trigger: "change" }
-        //   ],
-        //   role: [{ required: true, message: "请选择角色", trigger: "change" }],
-        //   fileList: [
-        //     { required: true, validator: validateFileList, trigger: "blur" }
-        //   ]
-        // },
+        ruleValidate: {
+          username: [
+            {
+              required: true,
+              message: "账号不能为空",
+              trigger: "blur"
+            }
+          ],
+          password: [
+            { required: true,  message: "不能为空", trigger: "blur" }
+          ],
+
+          realname: [
+            {
+              required: true,
+              message: "姓名不能为空",
+              trigger: "blur"
+            }
+          ],
+          phone: [
+            {
+              required: true,
+              message: "手机号不能为空",
+              trigger: "blur"
+            }
+          ],
+          email: [
+            {
+              required: true,
+              message: "邮箱不能为空",
+              trigger: "blur"
+            },
+            { type: "email", message: "邮箱格式不对", trigger: "blur" }
+          ],
+
+
+        },
       }
     },
     computed:{
@@ -154,7 +145,11 @@
         this.$emit('on-dialog-close');
       },
       handleConfirm(){
-        this.broadcast('SiUpload','on-form-submit',() => {})
+        this.broadcast('SiUpload','on-form-submit',() => {});
+        console.log('11111');
+        save(this.formValidate,res => {
+
+        })
       },
       handleTransportFileList(fileList){
         console.log(fileList);

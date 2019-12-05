@@ -52,7 +52,9 @@ export default {
     },
     fileList: {
       type: Array,
-      default: []
+      default(){
+        return []
+      }
     },
     limit: {
       type: Number,
